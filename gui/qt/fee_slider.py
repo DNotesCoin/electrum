@@ -16,6 +16,7 @@ class FeeSlider(QSlider):
         self.lock = threading.RLock()
         self.update()
         self.valueChanged.connect(self.moved)
+        self.setValue(0)
         self._active = True
 
     def moved(self, pos):

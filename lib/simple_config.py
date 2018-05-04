@@ -299,6 +299,8 @@ class SimpleConfig(PrintError):
             fee = self.fee_estimates.get(2)
             if fee is not None:
                 fee += fee/2
+        if fee < 10000:
+            fee = 10000
         return fee
 
     def fee_to_depth(self, target_fee):
@@ -322,7 +324,10 @@ class SimpleConfig(PrintError):
                 break
         else:
             return 0
-        return fee * 1000
+        fee *= 1000
+        if fee < 10000
+            fee = 10000
+        return fee
 
     def depth_target(self, i):
         return FEE_DEPTH_TARGETS[i]
@@ -478,7 +483,10 @@ class SimpleConfig(PrintError):
         # and for the sake of consistency, we thus only use integer sat/byte in
         # the backend too.
         fee_per_byte = int(fee_per_kb / 1000)
-        return int(fee_per_byte * size)
+        fee = int(fee_per_byte * size)
+        if fee < 10000:
+            fee = 10000
+        return fee
 
     def update_fee_estimates(self, key, value):
         self.fee_estimates[key] = value
