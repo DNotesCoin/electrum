@@ -257,13 +257,14 @@ class Commands:
         tx = Transaction(tx)
         return self.network.broadcast(tx, timeout)
 
-    @command('')
-    def createmultisig(self, num, pubkeys):
-        """Create multisig address"""
-        assert isinstance(pubkeys, list), (type(num), type(pubkeys))
-        redeem_script = multisig_script(pubkeys, num)
-        address = bitcoin.hash160_to_p2sh(hash_160(bfh(redeem_script)))
-        return {'address':address, 'redeemScript':redeem_script}
+    #DNotes - no support for multisig at this time
+    #@command('')
+    #def createmultisig(self, num, pubkeys):
+        #"""Create multisig address"""
+        #assert isinstance(pubkeys, list), (type(num), type(pubkeys))
+        #redeem_script = multisig_script(pubkeys, num)
+        #address = bitcoin.hash160_to_p2sh(hash_160(bfh(redeem_script)))
+        #return {'address':address, 'redeemScript':redeem_script}
 
     @command('w')
     def freeze(self, address):

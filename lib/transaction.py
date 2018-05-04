@@ -539,6 +539,7 @@ def parse_witness(vds, txin):
 def parse_output(vds, i):
     d = {}
     d['value'] = vds.read_int64()
+    d['invoice'] = vds.read_string()
     scriptPubKey = vds.read_bytes(vds.read_compact_size())
     d['type'], d['address'] = get_address_from_output_script(scriptPubKey)
     d['scriptPubKey'] = bh2u(scriptPubKey)
