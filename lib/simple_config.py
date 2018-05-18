@@ -299,8 +299,8 @@ class SimpleConfig(PrintError):
             fee = self.fee_estimates.get(2)
             if fee is not None:
                 fee += fee/2
-        if fee < 10000:
-            fee = 10000
+            if fee < 10000:
+                fee = 10000
         return fee
 
     def fee_to_depth(self, target_fee):
@@ -325,7 +325,7 @@ class SimpleConfig(PrintError):
         else:
             return 0
         fee *= 1000
-        if fee < 10000
+        if fee < 10000:
             fee = 10000
         return fee
 
