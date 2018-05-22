@@ -665,7 +665,7 @@ class ElectrumWindow(App):
         if not inputs:
             return ''
         addr = str(self.send_screen.screen.address) or self.wallet.dummy_address()
-        outputs = [(TYPE_ADDRESS, addr, '!')]
+        outputs = [(TYPE_ADDRESS, addr, '!', '')]
         tx = self.wallet.make_unsigned_transaction(inputs, outputs, self.electrum_config)
         amount = tx.output_value()
         return format_satoshis_plain(amount, self.decimal_point())

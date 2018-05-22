@@ -226,7 +226,7 @@ class Commands:
                 txin['signatures'] = [None]
                 txin['num_sig'] = 1
 
-        outputs = [(TYPE_ADDRESS, x['address'], int(x['value'])) for x in outputs]
+        outputs = [(TYPE_ADDRESS, x['address'], int(x['value']), x['invoice']) for x in outputs]
         tx = Transaction.from_io(inputs, outputs, locktime=locktime)
         tx.sign(keypairs)
         return tx.as_dict()
@@ -416,7 +416,7 @@ class Commands:
         for address, amount in outputs:
             address = self._resolver(address)
             amount = satoshis(amount)
-            final_outputs.append((TYPE_ADDRESS, address, amount))
+            final_outputs.append((TYPE_ADDRESS, address, amount, ''))
 
         coins = self.wallet.get_spendable_coins(domain, self.config)
         tx = self.wallet.make_unsigned_transaction(coins, final_outputs, self.config, fee, change_addr)

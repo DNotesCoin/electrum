@@ -40,6 +40,7 @@ from collections import defaultdict
 from numbers import Number
 from decimal import Decimal
 import itertools
+import time
 
 import sys
 
@@ -141,7 +142,7 @@ def sweep(privkeys, network, config, recipient, fee=None, imax=100):
     inputs, keypairs = sweep_preparations(privkeys, network, imax)
     total = sum(i.get('value') for i in inputs)
     if fee is None:
-        outputs = [(TYPE_ADDRESS, recipient, total)]
+        outputs = [(TYPE_ADDRESS, recipient, total, '')]
         tx = Transaction.from_io(inputs, outputs)
         fee = config.estimate_fee(tx.estimated_size())
     if total - fee < 0:
@@ -149,10 +150,11 @@ def sweep(privkeys, network, config, recipient, fee=None, imax=100):
     if total - fee < dust_threshold(network):
         raise Exception(_('Not enough funds on address.') + '\nTotal: %d satoshis\nFee: %d\nDust Threshold: %d'%(total, fee, dust_threshold(network)))
 
-    outputs = [(TYPE_ADDRESS, recipient, total - fee)]
+    outputs = [(TYPE_ADDRESS, recipient, total - fee, '')]
     locktime = network.get_local_height()
-
+    
     tx = Transaction.from_io(inputs, outputs, locktime=locktime)
+    tx.time = int(time.time())
     tx.BIP_LI01_sort()
     tx.set_rbf(True)
     tx.sign(keypairs)
@@ -784,7 +786,7 @@ class Abstract_Wallet(PrintError):
                     return addr
 
     def get_txout_address(self, txo):
-        _type, x, v = txo
+        _type, x, v, i = txo
         if _type == TYPE_ADDRESS:
             addr = x
         elif _type == TYPE_PUBKEY:
@@ -1202,7 +1204,7 @@ class Abstract_Wallet(PrintError):
         # check outputs
         i_max = None
         for i, o in enumerate(outputs):
-            _type, data, value = o
+            _type, data, value, _ = o
             if _type == TYPE_ADDRESS:
                 if not is_address(data):
                     raise Exception("Invalid bitcoin address: {}".format(data))
@@ -1270,6 +1272,7 @@ class Abstract_Wallet(PrintError):
         tx.BIP_LI01_sort()
         # Timelock tx to current height.
         tx.locktime = self.get_local_height()
+        tx.time = int(time.time())
         run_hook('make_unsigned_transaction', self, tx)
         return tx
 
@@ -1427,7 +1430,7 @@ class Abstract_Wallet(PrintError):
             return
         self.add_input_info(item)
         inputs = [item]
-        outputs = [(TYPE_ADDRESS, address, value - fee)]
+        outputs = [(TYPE_ADDRESS, address, value - fee, '')]
         locktime = self.get_local_height()
         # note: no need to call tx.BIP_LI01_sort() here - single input/output
         return Transaction.from_io(inputs, outputs, locktime=locktime)

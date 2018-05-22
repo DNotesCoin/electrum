@@ -1297,7 +1297,7 @@ class ElectrumWindow(QMainWindow, MessageBoxMixin, PrintError):
             outputs = self.payto_e.get_outputs(self.is_max)
             if not outputs:
                 _type, addr = self.get_payto_or_dummy()
-                outputs = [(_type, addr, amount)]
+                outputs = [(_type, addr, amount, '')] #null invoice for now
             is_sweep = bool(self.tx_external_keypairs)
             make_tx = lambda fee_est: \
                 self.wallet.make_unsigned_transaction(
@@ -1474,7 +1474,7 @@ class ElectrumWindow(QMainWindow, MessageBoxMixin, PrintError):
             self.show_error(_('No outputs'))
             return
 
-        for _type, addr, amount in outputs:
+        for _type, addr, amount, _ in outputs:
             if addr is None:
                 self.show_error(_('Bitcoin Address is None'))
                 return

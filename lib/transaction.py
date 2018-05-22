@@ -36,6 +36,7 @@ from .bitcoin import *
 import struct
 import traceback
 import sys
+import time
 
 #
 # Workalike python implementation of Bitcoin's CDataStream class.
@@ -553,7 +554,7 @@ def deserialize(raw):
     d = {}
     start = vds.read_cursor
     d['version'] = vds.read_int32()
-    d['nTime'] = vds.read_uint32()
+    d['time'] = vds.read_uint32()
     n_vin = vds.read_compact_size()
     is_segwit = (n_vin == 0)
     if is_segwit:
@@ -607,6 +608,7 @@ class Transaction:
         self._inputs = None
         self._outputs = None
         self.locktime = 0
+        self.time = 0
         self.version = 1
 
     def update(self, raw):
@@ -681,8 +683,9 @@ class Transaction:
             return
         d = deserialize(self.raw)
         self._inputs = d['inputs']
-        self._outputs = [(x['type'], x['address'], x['value']) for x in d['outputs']]
+        self._outputs = [(x['type'], x['address'], x['value'], x['invoice']) for x in d['outputs']]
         self.locktime = d['lockTime']
+        self.time = d['time']
         self.version = d['version']
         return d
 
@@ -692,6 +695,7 @@ class Transaction:
         self._inputs = inputs
         self._outputs = outputs
         self.locktime = locktime
+        self.time = int(time.time())
         return self
 
     @classmethod
@@ -888,8 +892,11 @@ class Transaction:
         self._outputs.sort(key = lambda o: (o[2], self.pay_script(o[0], o[1])))
 
     def serialize_output(self, output):
-        output_type, addr, amount = output
+        output_type, addr, amount, invoice = output
         s = int_to_hex(amount, 8)
+        invoice = invoice or ''
+        s += var_int(len(invoice))
+        s += invoice
         script = self.pay_script(output_type, addr)
         s += var_int(len(script)//2)
         s += script
@@ -924,9 +931,10 @@ class Transaction:
 
     def serialize(self, estimate_size=False, witness=True):
         nVersion = int_to_hex(self.version, 4)
-        nLocktime = int_to_hex(self.locktime, 4)
+        nTime = int_to_hex(self.time, 4)
         inputs = self.inputs()
         outputs = self.outputs()
+        nLocktime = int_to_hex(self.locktime, 4)
         txins = var_int(len(inputs)) + ''.join(self.serialize_input(txin, self.input_script(txin, estimate_size)) for txin in inputs)
         txouts = var_int(len(outputs)) + ''.join(self.serialize_output(o) for o in outputs)
         if witness and self.is_segwit():
@@ -935,7 +943,7 @@ class Transaction:
             witness = ''.join(self.serialize_witness(x, estimate_size) for x in inputs)
             return nVersion + marker + flag + txins + txouts + witness + nLocktime
         else:
-            return nVersion + txins + txouts + nLocktime
+            return nVersion + nTime + txins + txouts + nLocktime
 
     def hash(self):
         print("warning: deprecated tx.hash()")
@@ -964,7 +972,7 @@ class Transaction:
         return sum(x['value'] for x in self.inputs())
 
     def output_value(self):
-        return sum(val for tp, addr, val in self.outputs())
+        return sum(val for tp, addr, val, invoice in self.outputs())
 
     def get_fee(self):
         return self.input_value() - self.output_value()
@@ -1084,7 +1092,7 @@ class Transaction:
     def get_outputs(self):
         """convert pubkeys to addresses"""
         o = []
-        for type, x, v in self.outputs():
+        for type, x, v, i in self.outputs():
             if type == TYPE_ADDRESS:
                 addr = x
             elif type == TYPE_PUBKEY:
