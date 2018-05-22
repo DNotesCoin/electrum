@@ -904,6 +904,7 @@ class Transaction:
 
     def serialize_preimage(self, i):
         nVersion = int_to_hex(self.version, 4)
+        nTime = int_to_hex(self.time, 4)
         nHashType = int_to_hex(1, 4)
         nLocktime = int_to_hex(self.locktime, 4)
         inputs = self.inputs()
@@ -923,7 +924,7 @@ class Transaction:
         else:
             txins = var_int(len(inputs)) + ''.join(self.serialize_input(txin, self.get_preimage_script(txin) if i==k else '') for k, txin in enumerate(inputs))
             txouts = var_int(len(outputs)) + ''.join(self.serialize_output(o) for o in outputs)
-            preimage = nVersion + txins + txouts + nLocktime + nHashType
+            preimage = nVersion + nTime + txins + txouts + nLocktime + nHashType
         return preimage
 
     def is_segwit(self):

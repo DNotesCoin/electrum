@@ -168,7 +168,9 @@ class Network(util.DaemonThread):
             config = {}  # Do not use mutables as default values!
         util.DaemonThread.__init__(self)
         self.config = SimpleConfig(config) if isinstance(config, dict) else config
-        self.num_server = 10 if not self.config.get('oneserver') else 0
+        #self.num_server = 10 if not self.config.get('oneserver') else 0
+        #DNotes one server for now
+        self.num_server = 1
         self.blockchains = blockchain.read_blockchains(self.config)
         self.print_error("blockchains", self.blockchains.keys())
         self.blockchain_index = config.get('blockchain_index', 0)
@@ -564,8 +566,7 @@ class Network(util.DaemonThread):
                 self.notify('fee')
         elif method == 'blockchain.relayfee':
             if error is None:
-                #self.relay_fee = int(result * COIN) if result is not None else None
-                self.relay_fee = 5000
+                self.relay_fee = int(result * COIN) if result is not None else None
                 self.print_error("relayfee", self.relay_fee)
         elif method == 'blockchain.block.get_chunk':
             self.on_get_chunk(interface, response)

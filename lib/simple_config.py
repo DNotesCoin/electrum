@@ -484,8 +484,8 @@ class SimpleConfig(PrintError):
         # the backend too.
         fee_per_byte = int(fee_per_kb / 1000)
         fee = int(fee_per_byte * size)
-        if fee < 10000:
-            fee = 10000
+        if fee < 500000:
+            fee = 500000
         return fee
 
     def update_fee_estimates(self, key, value):
