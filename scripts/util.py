@@ -1,11 +1,11 @@
 import select, time, queue
-# import electrum
-from electrum import Connection, Interface, SimpleConfig
+# import electrum_dnotes
+from electrum_dnotes import Connection, Interface, SimpleConfig
 
-from electrum.network import parse_servers
+from electrum_dnotes.network import parse_servers
 from collections import defaultdict
 
-# electrum.util.set_verbosity(1)
+# electrum_dnotes.util.set_verbosity(1)
 def get_interfaces(servers, timeout=10):
     '''Returns a map of servers to connected interfaces.  If any
     connections fail or timeout, they will be missing from the map.

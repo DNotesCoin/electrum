@@ -2,17 +2,17 @@ from binascii import hexlify, unhexlify
 import traceback
 import sys
 
-from electrum.util import bfh, bh2u, UserCancelled
-from electrum.bitcoin import (b58_address_to_hash160, xpub_from_pubkey,
+from electrum_dnotes.util import bfh, bh2u, UserCancelled
+from electrum_dnotes.bitcoin import (b58_address_to_hash160, xpub_from_pubkey,
                               TYPE_ADDRESS, TYPE_SCRIPT,
                               is_segwit_address)
-from electrum import constants
-from electrum.i18n import _
-from electrum.plugins import BasePlugin
-from electrum.transaction import deserialize, Transaction
-from electrum.keystore import Hardware_KeyStore, is_xpubkey, parse_xpubkey
-from electrum.wallet import Standard_Wallet
-from electrum.base_wizard import ScriptTypeNotSupported
+from electrum_dnotes import constants
+from electrum_dnotes.i18n import _
+from electrum_dnotes.plugins import BasePlugin
+from electrum_dnotes.transaction import deserialize, Transaction
+from electrum_dnotes.keystore import Hardware_KeyStore, is_xpubkey, parse_xpubkey
+from electrum_dnotes.wallet import Standard_Wallet
+from electrum_dnotes.base_wizard import ScriptTypeNotSupported
 
 from ..hw_wallet import HW_PluginBase
 
@@ -416,7 +416,7 @@ class KeepKeyPlugin(HW_PluginBase):
 
         return outputs
 
-    def electrum_tx_to_txtype(self, tx):
+    def electrum_dnotes_tx_to_txtype(self, tx):
         t = self.types.TransactionType()
         d = deserialize(tx.raw)
         t.version = d['version']
@@ -432,4 +432,4 @@ class KeepKeyPlugin(HW_PluginBase):
     # This function is called from the TREZOR libraries (via tx_api)
     def get_tx(self, tx_hash):
         tx = self.prev_tx[tx_hash]
-        return self.electrum_tx_to_txtype(tx)
+        return self.electrum_dnotes_tx_to_txtype(tx)

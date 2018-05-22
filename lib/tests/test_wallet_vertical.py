@@ -63,7 +63,7 @@ class WalletIntegrityHelper:
 class TestWalletKeystoreAddressIntegrityForMainnet(unittest.TestCase):
 
     @mock.patch.object(storage.WalletStorage, '_write')
-    def test_electrum_seed_standard(self, mock_write):
+    def test_electrum_dnotes_seed_standard(self, mock_write):
         seed_words = 'cycle rocket west magnet parrot shuffle foot correct salt library feed song'
         self.assertEqual(bitcoin.seed_type(seed_words), 'standard')
 
@@ -82,7 +82,7 @@ class TestWalletKeystoreAddressIntegrityForMainnet(unittest.TestCase):
         self.assertEqual(w.get_change_addresses()[0], '1KSezYMhAJMWqFbVFB2JshYg69UpmEXR4D')
 
     @mock.patch.object(storage.WalletStorage, '_write')
-    def test_electrum_seed_segwit(self, mock_write):
+    def test_electrum_dnotes_seed_segwit(self, mock_write):
         seed_words = 'bitter grass shiver impose acquire brush forget axis eager alone wine silver'
         self.assertEqual(bitcoin.seed_type(seed_words), 'segwit')
 
@@ -101,7 +101,7 @@ class TestWalletKeystoreAddressIntegrityForMainnet(unittest.TestCase):
         self.assertEqual(w.get_change_addresses()[0], 'bc1qdy94n2q5qcp0kg7v9yzwe6wvfkhnvyzje7nx2p')
 
     @mock.patch.object(storage.WalletStorage, '_write')
-    def test_electrum_seed_old(self, mock_write):
+    def test_electrum_dnotes_seed_old(self, mock_write):
         seed_words = 'powerful random nobody notice nothing important anyway look away hidden message over'
         self.assertEqual(bitcoin.seed_type(seed_words), 'old')
 
@@ -119,7 +119,7 @@ class TestWalletKeystoreAddressIntegrityForMainnet(unittest.TestCase):
         self.assertEqual(w.get_change_addresses()[0], '1KRW8pH6HFHZh889VDq6fEKvmrsmApwNfe')
 
     @mock.patch.object(storage.WalletStorage, '_write')
-    def test_electrum_seed_2fa(self, mock_write):
+    def test_electrum_dnotes_seed_2fa(self, mock_write):
         seed_words = 'kiss live scene rude gate step hip quarter bunker oxygen motor glove'
         self.assertEqual(bitcoin.seed_type(seed_words), '2fa')
 
@@ -207,7 +207,7 @@ class TestWalletKeystoreAddressIntegrityForMainnet(unittest.TestCase):
         self.assertEqual(w.get_change_addresses()[0], 'bc1q8c6fshw2dlwun7ekn9qwf37cu2rn755upcp6el')
 
     @mock.patch.object(storage.WalletStorage, '_write')
-    def test_electrum_multisig_seed_standard(self, mock_write):
+    def test_electrum_dnotes_multisig_seed_standard(self, mock_write):
         seed_words = 'blast uniform dragon fiscal ensure vast young utility dinosaur abandon rookie sure'
         self.assertEqual(bitcoin.seed_type(seed_words), 'standard')
 
@@ -217,7 +217,7 @@ class TestWalletKeystoreAddressIntegrityForMainnet(unittest.TestCase):
         self.assertEqual(ks1.xprv, 'xprv9s21ZrQH143K3t9vo23J3hajRbzvkRLJ6Y1zFrUFAfU3t8oooMPfb7f87cn5KntgqZs5nipZkCiBFo5ZtaSD2eDo7j7CMuFV8Zu6GYLTpY6')
         self.assertEqual(ks1.xpub, 'xpub661MyMwAqRbcGNEPu3aJQqXTydqR9t49Tkwb4Esrj112kw8xLthv8uybxvaki4Ygt9xiwZUQGeFTG7T2TUzR3eA4Zp3aq5RXsABHFBUrq4c')
 
-        # electrum seed: ghost into match ivory badge robot record tackle radar elbow traffic loud
+        # electrum_dnotes seed: ghost into match ivory badge robot record tackle radar elbow traffic loud
         ks2 = keystore.from_xpub('xpub661MyMwAqRbcGfCPEkkyo5WmcrhTq8mi3xuBS7VEZ3LYvsgY1cCFDbenT33bdD12axvrmXhuX3xkAbKci3yZY9ZEk8vhLic7KNhLjqdh5ec')
         WalletIntegrityHelper.check_xpub_keystore_sanity(self, ks2)
         self.assertTrue(isinstance(ks2, keystore.BIP32_KeyStore))
@@ -229,7 +229,7 @@ class TestWalletKeystoreAddressIntegrityForMainnet(unittest.TestCase):
         self.assertEqual(w.get_change_addresses()[0], '36XWwEHrrVCLnhjK5MrVVGmUHghr9oWTN1')
 
     @mock.patch.object(storage.WalletStorage, '_write')
-    def test_electrum_multisig_seed_segwit(self, mock_write):
+    def test_electrum_dnotes_multisig_seed_segwit(self, mock_write):
         seed_words = 'snow nest raise royal more walk demise rotate smooth spirit canyon gun'
         self.assertEqual(bitcoin.seed_type(seed_words), 'segwit')
 
@@ -239,7 +239,7 @@ class TestWalletKeystoreAddressIntegrityForMainnet(unittest.TestCase):
         self.assertEqual(ks1.xprv, 'ZprvAjxLRqPiDfPDxXrm8JvcoCGRAW6xUtktucG6AMtdzaEbTEJN8qcECvujfhtDU3jLJ9g3Dr3Gz5m1ypfMs8iSUh62gWyHZ73bYLRWyeHf6y4')
         self.assertEqual(ks1.xpub, 'Zpub6xwgqLvc42wXB1wEELTdALD9iXwStMUkGqBgxkJFYumaL2dWgNvUkjEDWyDFZD3fZuDWDzd1KQJ4NwVHS7hs6H6QkpNYSShfNiUZsgMdtNg')
 
-        # electrum seed: hedgehog sunset update estate number jungle amount piano friend donate upper wool
+        # electrum_dnotes seed: hedgehog sunset update estate number jungle amount piano friend donate upper wool
         ks2 = keystore.from_xpub('Zpub6y4oYeETXAbzLNg45wcFDGwEG3vpgsyMJybiAfi2pJtNF3i3fJVxK2BeZJaw7VeKZm192QHvXP3uHDNpNmNDbQft9FiMzkKUhNXQafUMYUY')
         WalletIntegrityHelper.check_xpub_keystore_sanity(self, ks2)
         self.assertTrue(isinstance(ks2, keystore.BIP32_KeyStore))
@@ -323,13 +323,13 @@ class TestWalletSending(TestCaseForTestnet):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.electrum_path = tempfile.mkdtemp()
-        cls.config = SimpleConfig({'electrum_path': cls.electrum_path})
+        cls.electrum_dnotes_path = tempfile.mkdtemp()
+        cls.config = SimpleConfig({'electrum_dnotes_path': cls.electrum_dnotes_path})
 
     @classmethod
     def tearDownClass(cls):
         super().tearDownClass()
-        shutil.rmtree(cls.electrum_path)
+        shutil.rmtree(cls.electrum_dnotes_path)
 
     def create_standard_wallet_from_seed(self, seed_words):
         ks = keystore.from_seed(seed_words, '', False)

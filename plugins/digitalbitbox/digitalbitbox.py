@@ -4,17 +4,17 @@
 #
 
 try:
-    import electrum
-    from electrum.bitcoin import TYPE_ADDRESS, push_script, var_int, msg_magic, Hash, verify_message, pubkey_from_signature, point_to_ser, public_key_to_p2pkh, EncodeAES, DecodeAES, MyVerifyingKey, is_address
-    from electrum.bitcoin import serialize_xpub, deserialize_xpub
-    from electrum.wallet import Standard_Wallet
-    from electrum import constants
-    from electrum.transaction import Transaction
-    from electrum.i18n import _
-    from electrum.keystore import Hardware_KeyStore
+    import electrum_dnotes
+    from electrum_dnotes.bitcoin import TYPE_ADDRESS, push_script, var_int, msg_magic, Hash, verify_message, pubkey_from_signature, point_to_ser, public_key_to_p2pkh, EncodeAES, DecodeAES, MyVerifyingKey, is_address
+    from electrum_dnotes.bitcoin import serialize_xpub, deserialize_xpub
+    from electrum_dnotes.wallet import Standard_Wallet
+    from electrum_dnotes import constants
+    from electrum_dnotes.transaction import Transaction
+    from electrum_dnotes.i18n import _
+    from electrum_dnotes.keystore import Hardware_KeyStore
     from ..hw_wallet import HW_PluginBase
-    from electrum.util import print_error, to_string, UserCancelled
-    from electrum.base_wizard import ScriptTypeNotSupported, HWD_SETUP_NEW_WALLET
+    from electrum_dnotes.util import print_error, to_string, UserCancelled
+    from electrum_dnotes.base_wizard import ScriptTypeNotSupported, HWD_SETUP_NEW_WALLET
 
     import time
     import hid

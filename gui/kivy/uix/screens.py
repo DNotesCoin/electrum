@@ -17,15 +17,15 @@ from kivy.lang import Builder
 from kivy.factory import Factory
 from kivy.utils import platform
 
-from electrum.util import profiler, parse_URI, format_time, InvalidPassword, NotEnoughFunds, Fiat
-from electrum import bitcoin
-from electrum.util import timestamp_to_datetime
-from electrum.paymentrequest import PR_UNPAID, PR_PAID, PR_UNKNOWN, PR_EXPIRED
+from electrum_dnotes.util import profiler, parse_URI, format_time, InvalidPassword, NotEnoughFunds, Fiat
+from electrum_dnotes import bitcoin
+from electrum_dnotes.util import timestamp_to_datetime
+from electrum_dnotes.paymentrequest import PR_UNPAID, PR_PAID, PR_UNKNOWN, PR_EXPIRED
 
 from .context_menu import ContextMenu
 
 
-from electrum_gui.kivy.i18n import _
+from electrum_dnotes_gui.kivy.i18n import _
 
 
 class CScreen(Factory.Screen):
@@ -170,9 +170,9 @@ class SendScreen(CScreen):
     payment_request = None
 
     def set_URI(self, text):
-        import electrum
+        import electrum_dnotes
         try:
-            uri = electrum.util.parse_URI(text, self.app.on_pr)
+            uri = electrum_dnotes.util.parse_URI(text, self.app.on_pr)
         except:
             self.app.show_info(_("Not a DNotes URI"))
             return
@@ -212,7 +212,7 @@ class SendScreen(CScreen):
             # it should be already saved
             return
         # save address as invoice
-        from electrum.paymentrequest import make_unsigned_request, PaymentRequest
+        from electrum_dnotes.paymentrequest import make_unsigned_request, PaymentRequest
         req = {'address':self.screen.address, 'memo':self.screen.message}
         amount = self.app.get_amount(self.screen.amount) if self.screen.amount else 0
         req['amount'] = amount
@@ -256,7 +256,7 @@ class SendScreen(CScreen):
             outputs = [(bitcoin.TYPE_ADDRESS, address, amount, '')]
         message = self.screen.message
         amount = sum(map(lambda x:x[2], outputs))
-        if self.app.electrum_config.get('use_rbf'):
+        if self.app.electrum_dnotes_config.get('use_rbf'):
             from .dialogs.question import Question
             d = Question(_('Should this transaction be replaceable?'), lambda b: self._do_send(amount, message, outputs, b))
             d.open()
@@ -265,7 +265,7 @@ class SendScreen(CScreen):
 
     def _do_send(self, amount, message, outputs, rbf):
         # make unsigned transaction
-        config = self.app.electrum_config
+        config = self.app.electrum_dnotes_config
         coins = self.app.wallet.get_spendable_coins(None, config)
         try:
             tx = self.app.wallet.make_unsigned_transaction(coins, outputs, config, None)
@@ -336,7 +336,7 @@ class ReceiveScreen(CScreen):
         return b
 
     def on_address(self, addr):
-        req = self.app.wallet.get_payment_request(addr, self.app.electrum_config)
+        req = self.app.wallet.get_payment_request(addr, self.app.electrum_dnotes_config)
         self.screen.status = ''
         if req:
             self.screen.message = req.get('memo', '')
@@ -347,7 +347,7 @@ class ReceiveScreen(CScreen):
         Clock.schedule_once(lambda dt: self.update_qr())
 
     def get_URI(self):
-        from electrum.util import create_URI
+        from electrum_dnotes.util import create_URI
         amount = self.screen.amount
         if amount:
             a, u = self.screen.amount.split()
@@ -379,7 +379,7 @@ class ReceiveScreen(CScreen):
         amount = self.app.get_amount(amount) if amount else 0
         req = self.app.wallet.make_payment_request(addr, amount, message, None)
         try:
-            self.app.wallet.add_payment_request(req, self.app.electrum_config)
+            self.app.wallet.add_payment_request(req, self.app.electrum_dnotes_config)
             added_request = True
         except Exception as e:
             self.app.show_error(_('Error adding payment request') + ':\n' + str(e))

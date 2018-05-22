@@ -3,15 +3,15 @@ import hashlib
 import sys
 import traceback
 
-from electrum import bitcoin
-from electrum.bitcoin import TYPE_ADDRESS, int_to_hex, var_int
-from electrum.i18n import _
-from electrum.plugins import BasePlugin
-from electrum.keystore import Hardware_KeyStore
-from electrum.transaction import Transaction
-from electrum.wallet import Standard_Wallet
+from electrum_dnotes import bitcoin
+from electrum_dnotes.bitcoin import TYPE_ADDRESS, int_to_hex, var_int
+from electrum_dnotes.i18n import _
+from electrum_dnotes.plugins import BasePlugin
+from electrum_dnotes.keystore import Hardware_KeyStore
+from electrum_dnotes.transaction import Transaction
+from electrum_dnotes.wallet import Standard_Wallet
 from ..hw_wallet import HW_PluginBase
-from electrum.util import print_error, is_verbose, bfh, bh2u, versiontuple
+from electrum_dnotes.util import print_error, is_verbose, bfh, bh2u, versiontuple
 
 try:
     import hid
@@ -225,7 +225,7 @@ class Ledger_KeyStore(Hardware_KeyStore):
     def get_client(self):
         return self.plugin.get_client(self).dongleObject
 
-    def get_client_electrum(self):
+    def get_client_electrum_dnotes(self):
         return self.plugin.get_client(self)
 
     def give_error(self, message, clear_client = False):
@@ -336,12 +336,12 @@ class Ledger_KeyStore(Hardware_KeyStore):
                 p2shTransaction = True
 
             if txin['type'] in ['p2wpkh-p2sh', 'p2wsh-p2sh']:
-                if not self.get_client_electrum().supports_segwit():
+                if not self.get_client_electrum_dnotes().supports_segwit():
                     self.give_error(MSG_NEEDS_FW_UPDATE_SEGWIT)
                 segwitTransaction = True
 
             if txin['type'] in ['p2wpkh', 'p2wsh']:
-                if not self.get_client_electrum().supports_native_segwit():
+                if not self.get_client_electrum_dnotes().supports_native_segwit():
                     self.give_error(MSG_NEEDS_FW_UPDATE_SEGWIT)
                 segwitTransaction = True
 
@@ -387,7 +387,7 @@ class Ledger_KeyStore(Hardware_KeyStore):
 
         # Recognize outputs - only one output and one change is authorized
         if not p2shTransaction:
-            if not self.get_client_electrum().supports_multi_output():
+            if not self.get_client_electrum_dnotes().supports_multi_output():
                 if len(tx.outputs()) > 2:
                     self.give_error("Transaction with more than 2 outputs not supported")
             for _type, address, amount in tx.outputs():

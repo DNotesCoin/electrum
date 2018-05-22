@@ -14,7 +14,7 @@ from kivy.core.window import Window
 from kivy.clock import Clock
 from kivy.utils import platform
 
-from electrum.base_wizard import BaseWizard
+from electrum_dnotes.base_wizard import BaseWizard
 
 
 from . import EventsDialog
@@ -28,7 +28,7 @@ test_xpub = "xpub661MyMwAqRbcEbvVtRRSjqxVnaWVUMewVzMiURAKyYratih4TtBpMypzzefmv8z
 
 Builder.load_string('''
 #:import Window kivy.core.window.Window
-#:import _ electrum_gui.kivy.i18n._
+#:import _ electrum_dnotes_gui.kivy.i18n._
 
 
 <WizardTextInput@TextInput>
@@ -73,7 +73,7 @@ Builder.load_string('''
             size: Window.size
 
     crcontent: crcontent
-    # add electrum icon
+    # add electrum_dnotes icon
     BoxLayout:
         orientation: 'vertical' if self.width < self.height else 'horizontal'
         padding:
@@ -559,8 +559,8 @@ class RestoreSeedDialog(WizardDialog):
     def __init__(self, wizard, **kwargs):
         super(RestoreSeedDialog, self).__init__(wizard, **kwargs)
         self._test = kwargs['test']
-        from electrum.mnemonic import Mnemonic
-        from electrum.old_mnemonic import words as old_wordlist
+        from electrum_dnotes.mnemonic import Mnemonic
+        from electrum_dnotes.old_mnemonic import words as old_wordlist
         self.words = set(Mnemonic('en').wordlist).union(set(old_wordlist))
         self.ids.text_input_seed.text = test_seed if is_test else ''
         self.message = _('Please type your seed phrase using the virtual keyboard.')

@@ -4,7 +4,7 @@
 build/
 dist/
 *.egg/
-/electrum.py
+/electrum_dnotes.py
 contrib/pyinstaller/
 Electrum.egg-info/
 gui/qt/icons_rc.py

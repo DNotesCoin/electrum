@@ -30,18 +30,18 @@ import json
 from urllib.parse import urljoin
 from urllib.parse import quote
 
-import electrum
-from electrum import bitcoin
-from electrum import constants
-from electrum import keystore
-from electrum.bitcoin import *
-from electrum.mnemonic import Mnemonic
-from electrum import version
-from electrum.wallet import Multisig_Wallet, Deterministic_Wallet
-from electrum.i18n import _
-from electrum.plugins import BasePlugin, hook
-from electrum.util import NotEnoughFunds
-from electrum.storage import STO_EV_USER_PW
+import electrum_dnotes
+from electrum_dnotes import bitcoin
+from electrum_dnotes import constants
+from electrum_dnotes import keystore
+from electrum_dnotes.bitcoin import *
+from electrum_dnotes.mnemonic import Mnemonic
+from electrum_dnotes import version
+from electrum_dnotes.wallet import Multisig_Wallet, Deterministic_Wallet
+from electrum_dnotes.i18n import _
+from electrum_dnotes.plugins import BasePlugin, hook
+from electrum_dnotes.util import NotEnoughFunds
+from electrum_dnotes.storage import STO_EV_USER_PW
 
 # signing_xpub is hardcoded so that the wallet can be restored from seed, without TrustedCoin's server
 def get_signing_xpub():
@@ -123,7 +123,7 @@ class TrustedCoinCosignerClient(object):
         else:
             return response.text
 
-    def get_terms_of_service(self, billing_plan='electrum-per-tx-otp'):
+    def get_terms_of_service(self, billing_plan='electrum_dnotes-per-tx-otp'):
         """
         Returns the TOS for the given billing plan as a plain/text unicode string.
         :param billing_plan: the plan to return the terms for
@@ -131,7 +131,7 @@ class TrustedCoinCosignerClient(object):
         payload = {'billing_plan': billing_plan}
         return self.send_request('get', 'tos', payload)
 
-    def create(self, xpubkey1, xpubkey2, email, billing_plan='electrum-per-tx-otp'):
+    def create(self, xpubkey1, xpubkey2, email, billing_plan='electrum_dnotes-per-tx-otp'):
         """
         Creates a new cosigner resource.
         :param xpubkey1: a bip32 extended public key (customarily the hot key)
@@ -406,8 +406,8 @@ class TrustedCoinPlugin(BasePlugin):
 
     @classmethod
     def get_xkeys(self, seed, passphrase, derivation):
-        from electrum.mnemonic import Mnemonic
-        from electrum.keystore import bip32_root, bip32_private_derivation
+        from electrum_dnotes.mnemonic import Mnemonic
+        from electrum_dnotes.keystore import bip32_root, bip32_private_derivation
         bip32_seed = Mnemonic.mnemonic_to_seed(seed, passphrase)
         xprv, xpub = bip32_root(bip32_seed, 'standard')
         xprv, xpub = bip32_private_derivation(xprv, "m/", derivation)

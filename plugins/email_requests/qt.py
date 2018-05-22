@@ -42,11 +42,11 @@ from PyQt5.QtCore import *
 from PyQt5.QtWidgets import (QVBoxLayout, QLabel, QGridLayout, QLineEdit,
                              QInputDialog)
 
-from electrum.plugins import BasePlugin, hook
-from electrum.paymentrequest import PaymentRequest
-from electrum.i18n import _
-from electrum.util import PrintError
-from electrum_gui.qt.util import (EnterButton, Buttons, CloseButton, OkButton,
+from electrum_dnotes.plugins import BasePlugin, hook
+from electrum_dnotes.paymentrequest import PaymentRequest
+from electrum_dnotes.i18n import _
+from electrum_dnotes.util import PrintError
+from electrum_dnotes_gui.qt.util import (EnterButton, Buttons, CloseButton, OkButton,
                                   WindowModalDialog, get_parent_main_window)
 
 
@@ -166,7 +166,7 @@ class Plugin(BasePlugin):
         menu.addAction(_("Send via e-mail"), lambda: self.send(window, addr))
 
     def send(self, window, addr):
-        from electrum import paymentrequest
+        from electrum_dnotes import paymentrequest
         r = window.wallet.receive_requests.get(addr)
         message = r.get('memo', '')
         if r.get('signature'):

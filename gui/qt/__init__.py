@@ -38,16 +38,16 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 import PyQt5.QtCore as QtCore
 
-from electrum.i18n import _, set_language
-from electrum.plugins import run_hook
-from electrum import WalletStorage
-from electrum.base_wizard import GoBack
-# from electrum.synchronizer import Synchronizer
-# from electrum.verifier import SPV
-# from electrum.util import DebugMem
-from electrum.util import (UserCancelled, print_error,
+from electrum_dnotes.i18n import _, set_language
+from electrum_dnotes.plugins import run_hook
+from electrum_dnotes import WalletStorage
+from electrum_dnotes.base_wizard import GoBack
+# from electrum_dnotes.synchronizer import Synchronizer
+# from electrum_dnotes.verifier import SPV
+# from electrum_dnotes.util import DebugMem
+from electrum_dnotes.util import (UserCancelled, print_error,
                            WalletFileException, BitcoinException)
-# from electrum.wallet import Abstract_Wallet
+# from electrum_dnotes.wallet import Abstract_Wallet
 
 from .installwizard import InstallWizard
 
@@ -98,7 +98,7 @@ class ElectrumGui:
         if hasattr(QtCore.Qt, "AA_ShareOpenGLContexts"):
             QtCore.QCoreApplication.setAttribute(QtCore.Qt.AA_ShareOpenGLContexts)
         if hasattr(QGuiApplication, 'setDesktopFileName'):
-            QGuiApplication.setDesktopFileName('electrum.desktop')
+            QGuiApplication.setDesktopFileName('electrum_dnotes.desktop')
         self.config = config
         self.daemon = daemon
         self.plugins = plugins
@@ -138,9 +138,9 @@ class ElectrumGui:
 
     def tray_icon(self):
         if self.dark_icon:
-            return QIcon(':icons/electrum_dark_icon.png')
+            return QIcon(':icons/electrum_dnotes_dark_icon.png')
         else:
-            return QIcon(':icons/electrum_light_icon.png')
+            return QIcon(':icons/electrum_dnotes_light_icon.png')
 
     def toggle_tray_icon(self):
         self.dark_icon = not self.dark_icon

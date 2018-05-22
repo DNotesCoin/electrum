@@ -305,7 +305,7 @@ def android_data_dir():
     return PythonActivity.mActivity.getFilesDir().getPath() + '/data'
 
 def android_headers_dir():
-    d = android_ext_dir() + '/org.electrum.electrum'
+    d = android_ext_dir() + '/org.electrum_dnotes.electrum_dnotes'
     if not os.path.exists(d):
         os.mkdir(d)
     return d
@@ -314,16 +314,16 @@ def android_check_data_dir():
     """ if needed, move old directory to sandbox """
     ext_dir = android_ext_dir()
     data_dir = android_data_dir()
-    old_electrum_dir = ext_dir + '/electrum'
-    if not os.path.exists(data_dir) and os.path.exists(old_electrum_dir):
+    old_electrum_dnotes_dir = ext_dir + '/electrum_dnotes'
+    if not os.path.exists(data_dir) and os.path.exists(old_electrum_dnotes_dir):
         import shutil
         new_headers_path = android_headers_dir() + '/blockchain_headers'
-        old_headers_path = old_electrum_dir + '/blockchain_headers'
+        old_headers_path = old_electrum_dnotes_dir + '/blockchain_headers'
         if not os.path.exists(new_headers_path) and os.path.exists(old_headers_path):
             print_error("Moving headers file to", new_headers_path)
             shutil.move(old_headers_path, new_headers_path)
         print_error("Moving data to", data_dir)
-        shutil.move(old_electrum_dir, data_dir)
+        shutil.move(old_electrum_dnotes_dir, data_dir)
     return data_dir
 
 
@@ -416,7 +416,7 @@ def user_dir():
     if 'ANDROID_DATA' in os.environ:
         return android_check_data_dir()
     elif os.name == 'posix':
-        return os.path.join(os.environ["HOME"], ".electrum")
+        return os.path.join(os.environ["HOME"], ".electrum_dnotes")
     elif "APPDATA" in os.environ:
         return os.path.join(os.environ["APPDATA"], "Electrum")
     elif "LOCALAPPDATA" in os.environ:

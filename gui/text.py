@@ -3,10 +3,10 @@ import curses, datetime, locale
 from decimal import Decimal
 import getpass
 
-import electrum
-from electrum.util import format_satoshis, set_verbosity
-from electrum.bitcoin import is_address, COIN, TYPE_ADDRESS
-from electrum import Wallet, WalletStorage
+import electrum_dnotes
+from electrum_dnotes.util import format_satoshis, set_verbosity
+from electrum_dnotes.bitcoin import is_address, COIN, TYPE_ADDRESS
+from electrum_dnotes import Wallet, WalletStorage
 
 _ = lambda x:x
 
@@ -20,7 +20,7 @@ class ElectrumGui:
         self.network = daemon.network
         storage = WalletStorage(config.get_wallet_path())
         if not storage.file_exists():
-            print("Wallet not found. try 'electrum create'")
+            print("Wallet not found. try 'electrum_dnotes create'")
             exit()
         if storage.is_encrypted():
             password = getpass.getpass('Password:', stream=None)
@@ -392,7 +392,7 @@ class ElectrumGui:
                         self.show_message("Error:" + server + "\nIn doubt, type \"auto-connect\"")
                         return False
             if out.get('server') or out.get('proxy'):
-                proxy = electrum.network.deserialize_proxy(out.get('proxy')) if out.get('proxy') else proxy_config
+                proxy = electrum_dnotes.network.deserialize_proxy(out.get('proxy')) if out.get('proxy') else proxy_config
                 self.network.set_parameters(host, port, protocol, proxy, auto_connect)
 
     def settings_dialog(self):

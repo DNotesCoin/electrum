@@ -41,9 +41,9 @@ from . import bitcoin
 
 # seed_version is now used for the version of the wallet file
 
-OLD_SEED_VERSION = 4        # electrum versions < 2.0
-NEW_SEED_VERSION = 11       # electrum versions >= 2.0
-FINAL_SEED_VERSION = 16     # electrum >= 2.7 will set this to prevent
+OLD_SEED_VERSION = 4        # electrum_dnotes versions < 2.0
+NEW_SEED_VERSION = 11       # electrum_dnotes versions >= 2.0
+FINAL_SEED_VERSION = 16     # electrum_dnotes >= 2.7 will set this to prevent
                             # old versions from overwriting new format
 
 
@@ -609,6 +609,6 @@ class WalletStorage(PrintError):
                 # pbkdf2 was not included with the binaries, and wallet creation aborted.
                 msg += "\nIt does not contain any keys, and can safely be removed."
             else:
-                # creation was complete if electrum was run from source
+                # creation was complete if electrum_dnotes was run from source
                 msg += "\nPlease open this file with Electrum 1.9.8, and move your coins to a new wallet."
         raise WalletFileException(msg)

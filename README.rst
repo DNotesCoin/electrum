@@ -36,7 +36,7 @@ Electrum from its root directory, without installing it on your
 system; all the python dependencies are included in the 'packages'
 directory. To run Electrum from its root directory, just do::
 
-    ./electrum
+    ./electrum_dnotes
 
 You can also install Electrum on your system, by running this command::
 
@@ -59,8 +59,8 @@ Development version
 
 Check out the code from GitHub::
 
-    git clone git://github.com/spesmilo/electrum.git
-    cd electrum
+    git clone git://github.com/DNotesCoin/electrum_dnotes.git
+    cd electrum_dnotes
 
 Run install (this should install dependencies)::
 
