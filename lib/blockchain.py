@@ -27,6 +27,7 @@ from . import util
 from . import bitcoin
 from . import constants
 from .bitcoin import *
+from .transaction import BCDataStream
 
 MAX_TARGET = 0x00000000FFFF0000000000000000000000000000000000000000000000000000
 
@@ -60,8 +61,10 @@ def hash_header(header):
         return '0' * 64
     if header.get('prev_block_hash') is None:
         header['prev_block_hash'] = '00'*32
-    return hash_encode(Hash(bfh(serialize_header(header))))
-
+    if int(header.get('version'))>6:
+        return hash_encode(Hash(bfh(serialize_header(header))[:80]))
+    return hash_encode(x13Hash(bfh(serialize_header(header))[:80]))
+    
 
 blockchains = {}
 
@@ -168,15 +171,24 @@ class Blockchain(util.PrintError):
             #raise Exception("insufficient proof of work: %s vs target %s" % (int('0x' + _hash, 16), target))
         return
 
-    def verify_chunk(self, index, data):
-        num = len(data) // 80
+    def verify_chunk(self, index, data, trimmedData):
         prev_hash = self.get_hash(index * 2016 - 1)
         target = self.get_target(index-1)
-        for i in range(num):
-            raw_header = data[i*80:(i+1) * 80]
+        vds = BCDataStream()
+        vds.write(data)
+        i = 0
+        while vds.read_cursor < len(data):
+            if vds.read_cursor >= len(data): 
+                break
+            raw_header = vds.read_bytes(80)
+            numAddresses = vds.read_compact_size() # # address balances
+            if numAddresses > 0: #29 bytes in an address listing
+                vds.read_bytes(numAddresses*29) 
             header = deserialize_header(raw_header, index*2016 + i)
             self.verify_header(header, prev_hash, target)
             prev_hash = hash_header(header)
+            i += 1
+            trimmedData += raw_header
 
     def path(self):
         d = util.get_headers_dir(self.config)
@@ -357,9 +369,10 @@ class Blockchain(util.PrintError):
     def connect_chunk(self, idx, hexdata):
         try:
             data = bfh(hexdata)
-            self.verify_chunk(idx, data)
+            trimmedData = bytearray()
+            self.verify_chunk(idx, data, trimmedData)
             #self.print_error("validated chunk %d" % idx)
-            self.save_chunk(idx, data)
+            self.save_chunk(idx, trimmedData)
             return True
         except BaseException as e:
             self.print_error('verify_chunk %d failed'%idx, str(e))

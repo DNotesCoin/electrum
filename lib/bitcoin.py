@@ -41,7 +41,7 @@ from . import constants
 
 ################################## transactions
 
-COINBASE_MATURITY = 100
+COINBASE_MATURITY = 50
 COIN = 100000000
 
 # supported types of transaction outputs
@@ -243,6 +243,11 @@ def Hash(x):
     out = bytes(sha256(sha256(x)))
     return out
 
+def x13Hash(x):
+    import x13_hash
+    x = to_bytes(x, 'utf8')
+    out = bytes(x13_hash.getPoWHash(x[:80]))
+    return out
 
 hash_encode = lambda x: bh2u(x[::-1])
 hash_decode = lambda x: bfh(x)[::-1]
