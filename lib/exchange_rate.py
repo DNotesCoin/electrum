@@ -118,7 +118,7 @@ class BitcoinAverage(ExchangeBase):
 
     def get_rates(self, ccy):
         json = self.get_json('apiv2.bitcoinaverage.com', '/indices/global/ticker/short')
-        return dict([(r.replace("BTC", ""), Decimal(json[r]['last']))
+        return dict([(r.replace("NOTE", ""), Decimal(json[r]['last']))
                      for r in json if r != 'timestamp'])
 
     def history_ccys(self):
@@ -128,7 +128,7 @@ class BitcoinAverage(ExchangeBase):
 
     def request_history(self, ccy):
         history = self.get_csv('apiv2.bitcoinaverage.com',
-                               "/indices/global/history/BTC%s?period=alltime&format=csv" % ccy)
+                               "/indices/global/history/NOTE%s?period=alltime&format=csv" % ccy)
         return dict([(h['DateTime'][:10], h['Average'])
                      for h in history])
 
@@ -147,8 +147,8 @@ class BitcoinVenezuela(ExchangeBase):
 
     def get_rates(self, ccy):
         json = self.get_json('api.bitcoinvenezuela.com', '/')
-        rates = [(r, json['BTC'][r]) for r in json['BTC']
-                 if json['BTC'][r] is not None]  # Giving NULL for LTC
+        rates = [(r, json['NOTE'][r]) for r in json['NOTE']
+                 if json['NOTE'][r] is not None]  # Giving NULL for LTC
         return dict(rates)
 
     def history_ccys(self):
@@ -156,7 +156,7 @@ class BitcoinVenezuela(ExchangeBase):
 
     def request_history(self, ccy):
         return self.get_json('api.bitcoinvenezuela.com',
-                             "/historical/index.php?coin=BTC")[ccy +'_BTC']
+                             "/historical/index.php?coin=NOTE")[ccy +'_NOTE']
 
 
 class Bitbank(ExchangeBase):
@@ -176,7 +176,7 @@ class BitFlyer(ExchangeBase):
 class Bitmarket(ExchangeBase):
 
     def get_rates(self, ccy):
-        json = self.get_json('www.bitmarket.pl', '/json/BTCPLN/ticker.json')
+        json = self.get_json('www.bitmarket.pl', '/json/NOTEPLN/ticker.json')
         return {'PLN': Decimal(json['last'])}
 
 
@@ -328,7 +328,7 @@ class TheRockTrading(ExchangeBase):
 
     def get_rates(self, ccy):
         json = self.get_json('api.therocktrading.com', 
-                             '/v1/funds/BTCEUR/ticker')
+                             '/v1/funds/NOTEEUR/ticker')
         return {'EUR': Decimal(json['last'])}
 
 class Unocoin(ExchangeBase):

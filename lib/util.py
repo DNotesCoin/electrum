@@ -40,7 +40,7 @@ def inv_dict(d):
     return {v: k for k, v in d.items()}
 
 
-base_units = {'BTC':8, 'mBTC':5, 'uBTC':2}
+base_units = {'NOTE':8, 'mNOTE':5, 'uNOTE':2}
 
 def normalize_version(v):
     return [int(x) for x in re.sub(r'(\.0+)*$','', v).split(".")]
@@ -106,7 +106,7 @@ class Satoshis(object):
         return 'Satoshis(%d)'%self.value
 
     def __str__(self):
-        return format_satoshis(self.value) + " BTC"
+        return format_satoshis(self.value) + " NOTE"
 
 class Fiat(object):
     def __new__(cls, value, ccy):
@@ -530,12 +530,12 @@ mainnet_block_explorers = {
                         {'tx': 'tx/', 'addr': 'address/'}),
     'Blockr.io': ('https://btc.blockr.io/',
                         {'tx': 'tx/info/', 'addr': 'address/info/'}),
-    'Blocktrail.com': ('https://www.blocktrail.com/BTC/',
+    'Blocktrail.com': ('https://www.blocktrail.com/NOTE/',
                         {'tx': 'tx/', 'addr': 'address/'}),
     'BTC.com': ('https://chain.btc.com/',
                         {'tx': 'tx/', 'addr': 'address/'}),
     'Chain.so': ('https://www.chain.so/',
-                        {'tx': 'tx/BTC/', 'addr': 'address/BTC/'}),
+                        {'tx': 'tx/NOTE/', 'addr': 'address/NOTE/'}),
     'Insight.is': ('https://insight.bitpay.com/',
                         {'tx': 'tx/', 'addr': 'address/'}),
     'TradeBlock.com': ('https://tradeblock.com/blockchain/',
