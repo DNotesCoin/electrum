@@ -374,7 +374,7 @@ class ElectrumWindow(QMainWindow, MessageBoxMixin, PrintError):
             self.setGeometry(100, 100, 840, 400)
 
     def watching_only_changed(self):
-        name = "Electrum Testnet" if constants.net.TESTNET else "Electrum"
+        name = "Electrum DNotes Testnet" if constants.net.TESTNET else "Electrum DNotes"
         title = '%s %s  -  %s' % (name, self.wallet.electrum_version,
                                         self.wallet.basename())
         extra = [self.wallet.storage.get('wallet_type', '?')]
@@ -421,7 +421,7 @@ class ElectrumWindow(QMainWindow, MessageBoxMixin, PrintError):
                 shutil.copy2(path, new_path)
                 self.show_message(_("A copy of your wallet file was created in")+" '%s'" % str(new_path), title=_("Wallet backup created"))
             except BaseException as reason:
-                self.show_critical(_("Electrum was unable to copy your wallet file to the specified location.") + "\n" + str(reason), title=_("Unable to create backup"))
+                self.show_critical(_("Electrum DNotes was unable to copy your wallet file to the specified location.") + "\n" + str(reason), title=_("Unable to create backup"))
 
     def update_recently_visited(self, filename):
         recent = self.config.get('recently_open', [])
@@ -520,7 +520,7 @@ class ElectrumWindow(QMainWindow, MessageBoxMixin, PrintError):
         tools_menu = menubar.addMenu(_("&Tools"))
 
         # Settings / Preferences are all reserved keywords in macOS using this as work around
-        tools_menu.addAction(_("Electrum preferences") if sys.platform == 'darwin' else _("Preferences"), self.settings_dialog)
+        tools_menu.addAction(_("Electrum DNotes preferences") if sys.platform == 'darwin' else _("Preferences"), self.settings_dialog)
         tools_menu.addAction(_("&Network"), lambda: self.gui_object.show_network_dialog(self))
         tools_menu.addAction(_("&Plugins"), self.plugins_dialog)
         tools_menu.addSeparator()
@@ -558,19 +558,19 @@ class ElectrumWindow(QMainWindow, MessageBoxMixin, PrintError):
             self.show_error(_('No donation address for this server'))
 
     def show_about(self):
-        QMessageBox.about(self, "Electrum",
+        QMessageBox.about(self, "Electrum DNotes",
             _("Version")+" %s" % (self.wallet.electrum_version) + "\n\n" +
-                _("Electrum's focus is speed, with low resource usage and simplifying DNotes. You do not need to perform regular backups, because your wallet can be recovered from a secret phrase that you can memorize or write on paper. Startup times are instant because it operates in conjunction with high-performance servers that handle the most complicated parts of the DNotes system."  + "\n\n" +
+                _("Electrum DNotes's focus is speed, with low resource usage and simplifying DNotes. You do not need to perform regular backups, because your wallet can be recovered from a secret phrase that you can memorize or write on paper. Startup times are instant because it operates in conjunction with high-performance servers that handle the most complicated parts of the DNotes system."  + "\n\n" +
                 _("Uses icons from the Icons8 icon pack (icons8.com).")))
 
     def show_report_bug(self):
         msg = ' '.join([
             _("Please report any bugs as issues on github:<br/>"),
-            "<a href=\"https://github.com/spesmilo/electrum_dnotes/issues\">https://github.com/spesmilo/electrum_dnotes/issues</a><br/><br/>",
-            _("Before reporting a bug, upgrade to the most recent version of Electrum (latest release or git HEAD), and include the version number in your report."),
+            "<a href=\"https://github.com/DNotesCoin/electrum-DNotes/issues\">https://github.com/DNotesCoin/electrum-DNotes/issues</a><br/><br/>",
+            _("Before reporting a bug, upgrade to the most recent version of Electrum DNotes (latest release or git HEAD), and include the version number in your report."),
             _("Try to explain not only what the bug is, but how it occurs.")
          ])
-        self.show_message(msg, title="Electrum - " + _("Reporting Bugs"))
+        self.show_message(msg, title="Electrum DNotes - " + _("Reporting Bugs"))
 
     def notify_transactions(self):
         if not self.network or not self.network.is_connected():
@@ -600,9 +600,9 @@ class ElectrumWindow(QMainWindow, MessageBoxMixin, PrintError):
         if self.tray:
             try:
                 # this requires Qt 5.9
-                self.tray.showMessage("Electrum", message, QIcon(":icons/electrum_dnotes_dark_icon"), 20000)
+                self.tray.showMessage("Electrum DNotes", message, QIcon(":icons/electrum_dnotes_dark_icon"), 20000)
             except TypeError:
-                self.tray.showMessage("Electrum", message, QSystemTrayIcon.Information, 20000)
+                self.tray.showMessage("Electrum DNotes", message, QSystemTrayIcon.Information, 20000)
 
 
 
@@ -1153,7 +1153,7 @@ class ElectrumWindow(QMainWindow, MessageBoxMixin, PrintError):
 
         def feerounding_onclick():
             text = (self.feerounding_text + '\n\n' +
-                    _('To somewhat protect your privacy, Electrum tries to create change with similar precision to other outputs.') + ' ' +
+                    _('To somewhat protect your privacy, Electrum DNotes tries to create change with similar precision to other outputs.') + ' ' +
                     _('At most 100 satoshis might be lost due to this rounding.') + ' ' +
                     _("You can disable this setting in '{}'.").format(_('Preferences')) + '\n' +
                     _('Also, dust is not kept as change, but added to the fee.'))
@@ -2140,7 +2140,7 @@ class ElectrumWindow(QMainWindow, MessageBoxMixin, PrintError):
                 "private key, and verifying with the corresponding public key. The "
                 "address you have entered does not have a unique public key, so these "
                 "operations cannot be performed.") + '\n\n' + \
-               _('The operation is undefined. Not just in Electrum, but in general.')
+               _('The operation is undefined. Not just in Electrum DNotes, but in general.')
 
     @protected
     def do_sign(self, address, message, signature, password):
@@ -2303,7 +2303,7 @@ class ElectrumWindow(QMainWindow, MessageBoxMixin, PrintError):
             tx = tx_from_str(txt)
             return Transaction(tx)
         except BaseException as e:
-            self.show_critical(_("Electrum was unable to parse your transaction") + ":\n" + str(e))
+            self.show_critical(_("Electrum DNotes was unable to parse your transaction") + ":\n" + str(e))
             return
 
     def read_tx_from_qrcode(self):
@@ -2338,7 +2338,7 @@ class ElectrumWindow(QMainWindow, MessageBoxMixin, PrintError):
             with open(fileName, "r") as f:
                 file_content = f.read()
         except (ValueError, IOError, os.error) as reason:
-            self.show_critical(_("Electrum was unable to open your transaction file") + "\n" + str(reason), title=_("Unable to read file or no transaction found"))
+            self.show_critical(_("Electrum DNotes was unable to open your transaction file") + "\n" + str(reason), title=_("Unable to read file or no transaction found"))
             return
         return self.tx_from_text(file_content)
 
@@ -2449,7 +2449,7 @@ class ElectrumWindow(QMainWindow, MessageBoxMixin, PrintError):
             self.do_export_privkeys(filename, private_keys, csv_button.isChecked())
         except (IOError, os.error) as reason:
             txt = "\n".join([
-                _("Electrum was unable to produce a private key-export."),
+                _("Electrum DNotes was unable to produce a private key-export."),
                 str(reason)
             ])
             self.show_critical(txt, title=_("Unable to create csv"))
@@ -2993,7 +2993,7 @@ class ElectrumWindow(QMainWindow, MessageBoxMixin, PrintError):
 
         run_hook('close_settings_dialog')
         if self.need_restart:
-            self.show_warning(_('Please restart Electrum to activate the new GUI settings'), title=_('Success'))
+            self.show_warning(_('Please restart Electrum DNotes to activate the new GUI settings'), title=_('Success'))
 
 
     def closeEvent(self, event):
@@ -3020,7 +3020,7 @@ class ElectrumWindow(QMainWindow, MessageBoxMixin, PrintError):
         self.gui_object.close_window(self)
 
     def plugins_dialog(self):
-        self.pluginsdialog = d = WindowModalDialog(self, _('Electrum Plugins'))
+        self.pluginsdialog = d = WindowModalDialog(self, _('Electrum DNotes Plugins'))
 
         plugins = self.gui_object.plugins
 

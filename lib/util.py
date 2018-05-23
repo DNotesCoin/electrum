@@ -418,9 +418,9 @@ def user_dir():
     elif os.name == 'posix':
         return os.path.join(os.environ["HOME"], ".electrum_dnotes")
     elif "APPDATA" in os.environ:
-        return os.path.join(os.environ["APPDATA"], "Electrum")
+        return os.path.join(os.environ["APPDATA"], "Electrum DNotes")
     elif "LOCALAPPDATA" in os.environ:
-        return os.path.join(os.environ["LOCALAPPDATA"], "Electrum")
+        return os.path.join(os.environ["LOCALAPPDATA"], "Electrum DNotes")
     else:
         #raise Exception("No home directory found in environment variables.")
         return

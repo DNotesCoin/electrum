@@ -5,7 +5,7 @@ from PyInstaller.utils.hooks import collect_data_files, collect_submodules, coll
 import sys
 import os
 
-PACKAGE='Electrum'
+PACKAGE='Electrum DNotes'
 PYPKG='electrum_dnotes'
 MAIN_SCRIPT='electrum_dnotes'
 ICONS_FILE='electrum_dnotes.icns'

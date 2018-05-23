@@ -330,7 +330,7 @@ class Commands:
 
     @command('n')
     def getmerkle(self, txid, height):
-        """Get Merkle branch of a transaction included in a block. Electrum
+        """Get Merkle branch of a transaction included in a block. Electrum DNotes
         uses this to verify transactions (Simple Payment Verification)."""
         return self.network.synchronous_get(('blockchain.transaction.get_merkle', [txid, int(height)]))
 
@@ -827,7 +827,7 @@ def get_parser():
     add_global_options(parser)
     subparsers = parser.add_subparsers(dest='cmd', metavar='<command>')
     # gui
-    parser_gui = subparsers.add_parser('gui', description="Run Electrum's Graphical User Interface.", help="Run GUI (default)")
+    parser_gui = subparsers.add_parser('gui', description="Run Electrum DNotes's Graphical User Interface.", help="Run GUI (default)")
     parser_gui.add_argument("url", nargs='?', default=None, help="DNotes URI (or bip70 file)")
     parser_gui.add_argument("-g", "--gui", dest="gui", help="select graphical user interface", choices=['qt', 'kivy', 'text', 'stdio'])
     parser_gui.add_argument("-o", "--offline", action="store_true", dest="offline", default=False, help="Run offline")
