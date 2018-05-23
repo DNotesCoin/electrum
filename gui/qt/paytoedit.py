@@ -47,6 +47,7 @@ class PayToEdit(CompletionTextEdit, ScanQRTextEdit):
         ScanQRTextEdit.__init__(self)
         self.win = win
         self.amount_edit = win.amount_e
+        self.invoice_num = win.invoice_e
         self.document().contentsChanged.connect(self.update_size)
         self.heightMin = 0
         self.heightMax = 150
@@ -173,9 +174,9 @@ class PayToEdit(CompletionTextEdit, ScanQRTextEdit):
                 amount = '!'
             else:
                 amount = self.amount_edit.get_amount()
-
+            invoice = str(self.invoice_num.text()) or ''
             _type, addr = self.payto_address
-            self.outputs = [(_type, addr, amount, '')] #empty invoice for now
+            self.outputs = [(_type, addr, amount, invoice)]
 
         return self.outputs[:]
 

@@ -1043,6 +1043,7 @@ class ElectrumWindow(QMainWindow, MessageBoxMixin, PrintError):
 
         from .paytoedit import PayToEdit
         self.amount_e = BTCAmountEdit(self.get_decimal_point)
+        self.invoice_e = MyLineEdit()
         self.payto_e = PayToEdit(self)
         msg = _('Recipient of the funds.') + '\n\n'\
               + _('You may enter a DNotes address, a label from your list of contacts (a list of completions will be proposed), or an alias (email-like address that forwards to a DNotes address)')
@@ -1062,12 +1063,18 @@ class ElectrumWindow(QMainWindow, MessageBoxMixin, PrintError):
         self.message_e = MyLineEdit()
         grid.addWidget(self.message_e, 2, 1, 1, -1)
 
+        msg = _('Invoice number (not mandatory).') + '\n\n'\
+              + _('The invoice is a user defined identifier that gets stored in the blockchain with the transaction.')
+        invoice_label = HelpLabel(_('Invoice'), msg)
+        grid.addWidget(invoice_label, 3, 0)
+        grid.addWidget(self.invoice_e, 3, 1, 1, -1)
+
         self.from_label = QLabel(_('From'))
-        grid.addWidget(self.from_label, 3, 0)
+        grid.addWidget(self.from_label, 4, 0)
         self.from_list = MyTreeWidget(self, self.from_list_menu, ['',''])
         self.from_list.setHeaderHidden(True)
         self.from_list.setMaximumHeight(80)
-        grid.addWidget(self.from_list, 3, 1, 1, -1)
+        grid.addWidget(self.from_list, 4, 1, 1, -1)
         self.set_pay_from([])
 
         msg = _('Amount to be sent.') + '\n\n' \
@@ -1075,22 +1082,22 @@ class ElectrumWindow(QMainWindow, MessageBoxMixin, PrintError):
               + _('Note that if you have frozen some of your addresses, the available funds will be lower than your total balance.') + '\n\n' \
               + _('Keyboard shortcut: type "!" to send all your coins.')
         amount_label = HelpLabel(_('Amount'), msg)
-        grid.addWidget(amount_label, 4, 0)
-        grid.addWidget(self.amount_e, 4, 1)
+        grid.addWidget(amount_label, 5, 0)
+        grid.addWidget(self.amount_e, 5, 1)
 
         self.fiat_send_e = AmountEdit(self.fx.get_currency if self.fx else '')
         if not self.fx or not self.fx.is_enabled():
             self.fiat_send_e.setVisible(False)
-        grid.addWidget(self.fiat_send_e, 4, 2)
+        grid.addWidget(self.fiat_send_e, 5, 2)
         self.amount_e.frozen.connect(
             lambda: self.fiat_send_e.setFrozen(self.amount_e.isReadOnly()))
 
         self.max_button = EnterButton(_("Max"), self.spend_max)
         self.max_button.setFixedWidth(140)
-        grid.addWidget(self.max_button, 4, 3)
+        grid.addWidget(self.max_button, 5, 3)
         hbox = QHBoxLayout()
         hbox.addStretch(1)
-        grid.addLayout(hbox, 4, 4)
+        grid.addLayout(hbox, 5, 4)
 
         msg = _('DNotes transactions are in general not free. A transaction fee is paid by the sender of the funds.') + '\n\n'\
               + _('The amount of fee can be decided freely by the sender. However, transactions with low fees take more time to be processed.') + '\n\n'\
@@ -1170,7 +1177,7 @@ class ElectrumWindow(QMainWindow, MessageBoxMixin, PrintError):
         vbox_feelabel = QVBoxLayout()
         vbox_feelabel.addWidget(self.fee_e_label)
         vbox_feelabel.addStretch(1)
-        grid.addLayout(vbox_feelabel, 5, 0)
+        grid.addLayout(vbox_feelabel, 6, 0)
 
         self.fee_adv_controls = QWidget()
         hbox = QHBoxLayout(self.fee_adv_controls)
@@ -1185,7 +1192,7 @@ class ElectrumWindow(QMainWindow, MessageBoxMixin, PrintError):
         vbox_feecontrol.addWidget(self.fee_adv_controls)
         vbox_feecontrol.addWidget(self.fee_slider)
 
-        grid.addLayout(vbox_feecontrol, 5, 1, 1, -1)
+        grid.addLayout(vbox_feecontrol, 6, 1, 1, -1)
 
         if not self.config.get('show_fee', False):
             self.fee_adv_controls.setVisible(False)
@@ -1199,7 +1206,7 @@ class ElectrumWindow(QMainWindow, MessageBoxMixin, PrintError):
         buttons.addWidget(self.clear_button)
         buttons.addWidget(self.preview_button)
         buttons.addWidget(self.send_button)
-        grid.addLayout(buttons, 6, 1, 1, 3)
+        grid.addLayout(buttons, 7, 1, 1, 3)
 
         self.amount_e.shortcut.connect(self.spend_max)
         self.payto_e.textChanged.connect(self.update_fee)
@@ -1651,7 +1658,7 @@ class ElectrumWindow(QMainWindow, MessageBoxMixin, PrintError):
     def prepare_for_payment_request(self):
         self.show_send_tab()
         self.payto_e.is_pr = True
-        for e in [self.payto_e, self.amount_e, self.message_e]:
+        for e in [self.payto_e, self.amount_e, self.message_e, self.invoice_e]:
             e.setFrozen(True)
         self.payto_e.setText(_("please wait..."))
         return True
@@ -1729,7 +1736,7 @@ class ElectrumWindow(QMainWindow, MessageBoxMixin, PrintError):
         self.not_enough_funds = False
         self.payment_request = None
         self.payto_e.is_pr = False
-        for e in [self.payto_e, self.message_e, self.amount_e, self.fiat_send_e,
+        for e in [self.payto_e, self.message_e, self.amount_e, self.invoice_e, self.fiat_send_e,
                   self.fee_e, self.feerate_e]:
             e.setText('')
             e.setFrozen(False)

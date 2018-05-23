@@ -1260,12 +1260,12 @@ class Abstract_Wallet(PrintError):
         else:
             # FIXME?? this might spend inputs with negative effective value...
             sendable = sum(map(lambda x:x['value'], inputs))
-            _type, data, value = outputs[i_max]
-            outputs[i_max] = (_type, data, 0)
+            _type, data, value, _ = outputs[i_max]
+            outputs[i_max] = (_type, data, 0, '')
             tx = Transaction.from_io(inputs, outputs[:])
             fee = fee_estimator(tx.estimated_size())
             amount = max(0, sendable - tx.output_value() - fee)
-            outputs[i_max] = (_type, data, amount)
+            outputs[i_max] = (_type, data, amount, '')
             tx = Transaction.from_io(inputs, outputs[:])
 
         # Sort the inputs and outputs deterministically

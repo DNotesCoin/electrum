@@ -895,8 +895,9 @@ class Transaction:
         output_type, addr, amount, invoice = output
         s = int_to_hex(amount, 8)
         invoice = invoice or ''
-        s += var_int(len(invoice))
-        s += invoice
+        vds = BCDataStream()
+        vds.write_string(invoice)
+        s += bh2u(vds.input)
         script = self.pay_script(output_type, addr)
         s += var_int(len(script)//2)
         s += script
