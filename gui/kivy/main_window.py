@@ -72,7 +72,7 @@ from electrum_dnotes.util import base_units
 
 class ElectrumWindow(App):
 
-    electrum-dnotes_config = ObjectProperty(None)
+    electrum_dnotes_config = ObjectProperty(None)
     language = StringProperty('en')
 
     # properties might be updated by the network
@@ -121,15 +121,15 @@ class ElectrumWindow(App):
 
     use_rbf = BooleanProperty(False)
     def on_use_rbf(self, instance, x):
-        self.electrum-dnotes_config.set_key('use_rbf', self.use_rbf, True)
+        self.electrum_dnotes_config.set_key('use_rbf', self.use_rbf, True)
 
     use_change = BooleanProperty(False)
     def on_use_change(self, instance, x):
-        self.electrum-dnotes_config.set_key('use_change', self.use_change, True)
+        self.electrum_dnotes_config.set_key('use_change', self.use_change, True)
 
     use_unconfirmed = BooleanProperty(False)
     def on_use_unconfirmed(self, instance, x):
-        self.electrum-dnotes_config.set_key('confirmed_only', not self.use_unconfirmed, True)
+        self.electrum_dnotes_config.set_key('confirmed_only', not self.use_unconfirmed, True)
 
     def set_URI(self, uri):
         self.switch_to('send')
@@ -158,11 +158,11 @@ class ElectrumWindow(App):
         self._trigger_update_history()
 
     def _get_bu(self):
-        return self.electrum-dnotes_config.get('base_unit', 'mNOTE')
+        return self.electrum_dnotes_config.get('base_unit', 'mNOTE')
 
     def _set_bu(self, value):
         assert value in base_units.keys()
-        self.electrum-dnotes_config.set_key('base_unit', value, True)
+        self.electrum_dnotes_config.set_key('base_unit', value, True)
         self._trigger_update_status()
         self._trigger_update_history()
 
@@ -249,7 +249,7 @@ class ElectrumWindow(App):
         App.__init__(self)#, **kwargs)
 
         title = _('Electrum DNotes App')
-        self.electrum-dnotes_config = config = kwargs.get('config', None)
+        self.electrum_dnotes_config = config = kwargs.get('config', None)
         self.language = config.get('language', 'en')
         self.network = network = kwargs.get('network', None)
         if self.network:
@@ -278,7 +278,7 @@ class ElectrumWindow(App):
         # cached dialogs
         self._settings_dialog = None
         self._password_dialog = None
-        self.fee_status = self.electrum-dnotes_config.get_fee_status()
+        self.fee_status = self.electrum_dnotes_config.get_fee_status()
 
     def wallet_name(self):
         return os.path.basename(self.wallet.storage.path) if self.wallet else ' '
@@ -471,9 +471,9 @@ class ElectrumWindow(App):
             self.network.register_callback(self.on_quotes, ['on_quotes'])
             self.network.register_callback(self.on_history, ['on_history'])
         # load wallet
-        self.load_wallet_by_name(self.electrum-dnotes_config.get_wallet_path())
+        self.load_wallet_by_name(self.electrum_dnotes_config.get_wallet_path())
         # URI passed in config
-        uri = self.electrum-dnotes_config.get('url')
+        uri = self.electrum_dnotes_config.get('url')
         if uri:
             self.set_URI(uri)
 
@@ -504,7 +504,7 @@ class ElectrumWindow(App):
         else:
             Logger.debug('Electrum DNotes: Wallet not found. Launching install wizard')
             storage = WalletStorage(path)
-            wizard = Factory.InstallWizard(self.electrum-dnotes_config, storage)
+            wizard = Factory.InstallWizard(self.electrum_dnotes_config, storage)
             wizard.bind(on_wizard_complete=self.on_wizard_complete)
             action = wizard.storage.get_action()
             wizard.run(action)
@@ -661,12 +661,12 @@ class ElectrumWindow(App):
         self.fiat_balance = self.fx.format_amount(c+u+x) + ' [size=22dp]%s[/size]'% self.fx.ccy
 
     def get_max_amount(self):
-        inputs = self.wallet.get_spendable_coins(None, self.electrum-dnotes_config)
+        inputs = self.wallet.get_spendable_coins(None, self.electrum_dnotes_config)
         if not inputs:
             return ''
         addr = str(self.send_screen.screen.address) or self.wallet.dummy_address()
         outputs = [(TYPE_ADDRESS, addr, '!', '')]
-        tx = self.wallet.make_unsigned_transaction(inputs, outputs, self.electrum-dnotes_config)
+        tx = self.wallet.make_unsigned_transaction(inputs, outputs, self.electrum_dnotes_config)
         amount = tx.output_value()
         return format_satoshis_plain(amount, self.decimal_point())
 
@@ -865,7 +865,7 @@ class ElectrumWindow(App):
 
     def requests_dialog(self, screen):
         from .uix.dialogs.requests import RequestsDialog
-        if len(self.wallet.get_sorted_requests(self.electrum-dnotes_config)) == 0:
+        if len(self.wallet.get_sorted_requests(self.electrum_dnotes_config)) == 0:
             self.show_info(_('No saved requests.'))
             return
         popup = RequestsDialog(self, screen, None)
@@ -881,12 +881,12 @@ class ElectrumWindow(App):
     def fee_dialog(self, label, dt):
         from .uix.dialogs.fee_dialog import FeeDialog
         def cb():
-            self.fee_status = self.electrum-dnotes_config.get_fee_status()
-        fee_dialog = FeeDialog(self, self.electrum-dnotes_config, cb)
+            self.fee_status = self.electrum_dnotes_config.get_fee_status()
+        fee_dialog = FeeDialog(self, self.electrum_dnotes_config, cb)
         fee_dialog.open()
 
     def on_fee(self, event, *arg):
-        self.fee_status = self.electrum-dnotes_config.get_fee_status()
+        self.fee_status = self.electrum_dnotes_config.get_fee_status()
 
     def protected(self, msg, f, args):
         if self.wallet.has_password():

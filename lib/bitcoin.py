@@ -268,15 +268,15 @@ def is_old_seed(seed):
     try:
         # checks here are deliberately left weak for legacy reasons, see #3149
         old_mnemonic.mn_decode(words)
-        uses_electrum-dnotes_words = True
+        uses_electrum_dnotes_words = True
     except Exception:
-        uses_electrum-dnotes_words = False
+        uses_electrum_dnotes_words = False
     try:
         seed = bfh(seed)
         is_hex = (len(seed) == 16 or len(seed) == 32)
     except Exception:
         is_hex = False
-    return is_hex or (uses_electrum-dnotes_words and (len(words) == 12 or len(words) == 24))
+    return is_hex or (uses_electrum_dnotes_words and (len(words) == 12 or len(words) == 24))
 
 
 def seed_type(x):

@@ -35,7 +35,7 @@ class Plugin(BasePlugin):
 
     def __init__(self, parent, config, name):
         BasePlugin.__init__(self, parent, config, name)
-        self.base_dir = config.electrum-dnotes_path()+'/revealer/'
+        self.base_dir = config.electrum_dnotes_path()+'/revealer/'
 
         if self.config.get('calibration_h') == None:
             self.config.set_key('calibration_h', 0)

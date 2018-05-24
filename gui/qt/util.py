@@ -728,32 +728,32 @@ class AcceptFileDragDrop:
         raise NotImplementedError()
 
 
-def import_meta_gui(electrum-dnotes_window, title, importer, on_success):
+def import_meta_gui(electrum_dnotes_window, title, importer, on_success):
     filter_ = "JSON (*.json);;All files (*)"
-    filename = electrum-dnotes_window.getOpenFileName(_("Open {} file").format(title), filter_)
+    filename = electrum_dnotes_window.getOpenFileName(_("Open {} file").format(title), filter_)
     if not filename:
         return
     try:
         importer(filename)
     except FileImportFailed as e:
-        electrum-dnotes_window.show_critical(str(e))
+        electrum_dnotes_window.show_critical(str(e))
     else:
-        electrum-dnotes_window.show_message(_("Your {} were successfully imported").format(title))
+        electrum_dnotes_window.show_message(_("Your {} were successfully imported").format(title))
         on_success()
 
 
-def export_meta_gui(electrum-dnotes_window, title, exporter):
+def export_meta_gui(electrum_dnotes_window, title, exporter):
     filter_ = "JSON (*.json);;All files (*)"
-    filename = electrum-dnotes_window.getSaveFileName(_("Select file to save your {}").format(title),
+    filename = electrum_dnotes_window.getSaveFileName(_("Select file to save your {}").format(title),
                                                'electrum-dnotes_{}.json'.format(title), filter_)
     if not filename:
         return
     try:
         exporter(filename)
     except FileExportFailed as e:
-        electrum-dnotes_window.show_critical(str(e))
+        electrum_dnotes_window.show_critical(str(e))
     else:
-        electrum-dnotes_window.show_message(_("Your {0} were exported to '{1}'")
+        electrum_dnotes_window.show_message(_("Your {0} were exported to '{1}'")
                                      .format(title, str(filename)))
 
 

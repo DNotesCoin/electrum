@@ -256,7 +256,7 @@ class SendScreen(CScreen):
             outputs = [(bitcoin.TYPE_ADDRESS, address, amount, '')]
         message = self.screen.message
         amount = sum(map(lambda x:x[2], outputs))
-        if self.app.electrum-dnotes_config.get('use_rbf'):
+        if self.app.electrum_dnotes_config.get('use_rbf'):
             from .dialogs.question import Question
             d = Question(_('Should this transaction be replaceable?'), lambda b: self._do_send(amount, message, outputs, b))
             d.open()
@@ -265,7 +265,7 @@ class SendScreen(CScreen):
 
     def _do_send(self, amount, message, outputs, rbf):
         # make unsigned transaction
-        config = self.app.electrum-dnotes_config
+        config = self.app.electrum_dnotes_config
         coins = self.app.wallet.get_spendable_coins(None, config)
         try:
             tx = self.app.wallet.make_unsigned_transaction(coins, outputs, config, None)
@@ -336,7 +336,7 @@ class ReceiveScreen(CScreen):
         return b
 
     def on_address(self, addr):
-        req = self.app.wallet.get_payment_request(addr, self.app.electrum-dnotes_config)
+        req = self.app.wallet.get_payment_request(addr, self.app.electrum_dnotes_config)
         self.screen.status = ''
         if req:
             self.screen.message = req.get('memo', '')
@@ -379,7 +379,7 @@ class ReceiveScreen(CScreen):
         amount = self.app.get_amount(amount) if amount else 0
         req = self.app.wallet.make_payment_request(addr, amount, message, None)
         try:
-            self.app.wallet.add_payment_request(req, self.app.electrum-dnotes_config)
+            self.app.wallet.add_payment_request(req, self.app.electrum_dnotes_config)
             added_request = True
         except Exception as e:
             self.app.show_error(_('Error adding payment request') + ':\n' + str(e))
