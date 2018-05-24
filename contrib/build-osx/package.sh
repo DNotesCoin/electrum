@@ -17,7 +17,7 @@ export PATH=$PATH:~/bin
 . $(dirname "$0")/base.sh
 
 if [ -z "$1" ]; then
-    echo "Usage: $0 Electrum_DNotes.app"
+    echo "Usage: $0 Electrum-DNotes.app"
     exit -127
 fi
 
@@ -73,16 +73,16 @@ ${genisoimage} \
     -D \
     -l \
     -probe \
-    -V "Electrum_DNotes" \
+    -V "Electrum-DNotes" \
     -no-pad \
     -r \
     -dir-mode 0755 \
     -apple \
-    -o Electrum_DNotes_uncompressed.dmg \
+    -o Electrum-DNotes_uncompressed.dmg \
     /tmp/electrum-dnotes-macos/image || fail "Unable to create uncompressed dmg"
 
-dmg dmg Electrum_DNotes_uncompressed.dmg electrum-dnotes-$VERSION.dmg || fail "Unable to create compressed dmg"
-rm Electrum_DNotes_uncompressed.dmg
+dmg dmg Electrum-DNotes_uncompressed.dmg electrum-dnotes-$VERSION.dmg || fail "Unable to create compressed dmg"
+rm Electrum-DNotes_uncompressed.dmg
 
 echo "Done."
 md5sum electrum-dnotes-$VERSION.dmg

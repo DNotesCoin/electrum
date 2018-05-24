@@ -79,8 +79,8 @@ class SimpleConfig(PrintError):
         self.cmdline_options.pop('config_version', None)
 
         # Set self.path and read the user config
-        self.user_config = {}  # for self.get in electrum-dnotes_path()
-        self.path = self.electrum-dnotes_path()
+        self.user_config = {}  # for self.get in electrum_dnotes_path()
+        self.path = self.electrum_dnotes_path()
         self.user_config = read_user_config_function(self.path)
         if not self.user_config:
             # avoid new config getting upgraded
@@ -97,7 +97,7 @@ class SimpleConfig(PrintError):
         # Make a singleton instance of 'self'
         set_config(self)
 
-    def electrum-dnotes_path(self):
+    def electrum_dnotes_path(self):
         # Read electrum-dnotes_path from command line
         # Otherwise use the user's default data directory.
         path = self.get('electrum-dnotes_path')

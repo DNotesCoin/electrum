@@ -1,10 +1,10 @@
 [app]
 
 # (str) Title of your application
-title = Electrum_DNotes
+title = Electrum-DNotes
 
 # (str) Package name
-package.name = Electrum_DNotes
+package.name = Electrum-DNotes
 
 # (str) Package domain (needed for android/ios packaging)
 package.domain = org.electrum-dnotes
