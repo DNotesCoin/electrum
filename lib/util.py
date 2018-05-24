@@ -314,16 +314,16 @@ def android_check_data_dir():
     """ if needed, move old directory to sandbox """
     ext_dir = android_ext_dir()
     data_dir = android_data_dir()
-    old_electrum-dnotes_dir = ext_dir + '/electrum-dnotes'
-    if not os.path.exists(data_dir) and os.path.exists(old_electrum-dnotes_dir):
+    old_electrum_dnotes_dir = ext_dir + '/electrum-dnotes'
+    if not os.path.exists(data_dir) and os.path.exists(old_electrum_dnotes_dir):
         import shutil
         new_headers_path = android_headers_dir() + '/blockchain_headers'
-        old_headers_path = old_electrum-dnotes_dir + '/blockchain_headers'
+        old_headers_path = old_electrum_dnotes_dir + '/blockchain_headers'
         if not os.path.exists(new_headers_path) and os.path.exists(old_headers_path):
             print_error("Moving headers file to", new_headers_path)
             shutil.move(old_headers_path, new_headers_path)
         print_error("Moving data to", data_dir)
-        shutil.move(old_electrum-dnotes_dir, data_dir)
+        shutil.move(old_electrum_dnotes_dir, data_dir)
     return data_dir
 
 
