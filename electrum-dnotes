@@ -67,9 +67,9 @@ if not is_android:
 # load local module as electrum-dnotes
 if is_local or is_android:
     import imp
-    imp.load_module('electrum-dnotes', *imp.find_module('lib'))
-    imp.load_module('electrum-dnotes_gui', *imp.find_module('gui'))
-    imp.load_module('electrum-dnotes_plugins', *imp.find_module('plugins'))
+    imp.load_module('electrum_dnotes', *imp.find_module('lib'))
+    imp.load_module('electrum_dnotes_gui', *imp.find_module('gui'))
+    imp.load_module('electrum_dnotes_plugins', *imp.find_module('plugins'))
 
 
 
