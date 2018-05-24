@@ -121,8 +121,8 @@ class TrezorClientBase(GuiMixin, PrintError):
 
     def has_usable_connection_with_device(self):
         try:
-            res = self.ping("electrum_dnotes pinging device")
-            assert res == "electrum_dnotes pinging device"
+            res = self.ping("electrum-dnotes pinging device")
+            assert res == "electrum-dnotes pinging device"
         except BaseException:
             return False
         return True

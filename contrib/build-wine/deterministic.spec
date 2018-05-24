@@ -13,7 +13,7 @@ else:
 PYTHON_VERSION = '3.5.4'
 PYHOME = 'c:/python' + PYTHON_VERSION
 
-home = 'C:\\electrum_dnotes\\'
+home = 'C:\\electrum-dnotes\\'
 
 # see https://github.com/pyinstaller/pyinstaller/issues/2005
 hiddenimports = []
@@ -29,14 +29,14 @@ binaries = [(PYHOME+"/libusb-1.0.dll", ".")]
 binaries += [b for b in collect_dynamic_libs('PyQt5') if 'qwindowsvista' in b[0]]
 
 datas = [
-    (home+'lib/currencies.json', 'electrum_dnotes'),
-    (home+'lib/servers.json', 'electrum_dnotes'),
-    (home+'lib/checkpoints.json', 'electrum_dnotes'),
-    (home+'lib/servers_testnet.json', 'electrum_dnotes'),
-    (home+'lib/checkpoints_testnet.json', 'electrum_dnotes'),
-    (home+'lib/wordlist/english.txt', 'electrum_dnotes/wordlist'),
-    (home+'lib/locale', 'electrum_dnotes/locale'),
-    (home+'plugins', 'electrum_dnotes_plugins'),
+    (home+'lib/currencies.json', 'electrum-dnotes'),
+    (home+'lib/servers.json', 'electrum-dnotes'),
+    (home+'lib/checkpoints.json', 'electrum-dnotes'),
+    (home+'lib/servers_testnet.json', 'electrum-dnotes'),
+    (home+'lib/checkpoints_testnet.json', 'electrum-dnotes'),
+    (home+'lib/wordlist/english.txt', 'electrum-dnotes/wordlist'),
+    #(home+'lib/locale', 'electrum-dnotes/locale'),
+    (home+'plugins', 'electrum-dnotes_plugins'),
     ('C:\\Program Files (x86)\\ZBar\\bin\\', '.')
 ]
 datas += collect_data_files('trezorlib')
@@ -44,7 +44,7 @@ datas += collect_data_files('btchip')
 datas += collect_data_files('keepkeylib')
 
 # We don't put these files in to actually include them in the script but to make the Analysis method scan them for imports
-a = Analysis([home+'electrum_dnotes',
+a = Analysis([home+'electrum-dnotes',
               home+'gui/qt/main_window.py',
               home+'gui/text.py',
               home+'lib/util.py',
@@ -88,11 +88,11 @@ exe_standalone = EXE(
     a.scripts,
     a.binaries,
     a.datas, 
-    name=os.path.join('build\\pyi.win32\\electrum_dnotes', cmdline_name + ".exe"),
+    name=os.path.join('build\\pyi.win32\\electrum-dnotes', cmdline_name + ".exe"),
     debug=False,
     strip=None,
     upx=False,
-    icon=home+'icons/electrum_dnotes.ico',
+    icon=home+'icons/electrum-dnotes.ico',
     console=False)
     # console=True makes an annoying black box pop up, but it does make Electrum output command line commands, with this turned off no output will be given but commands can still be used
 
@@ -101,11 +101,11 @@ exe_portable = EXE(
     a.scripts,
     a.binaries,
     a.datas + [ ('is_portable', 'README.md', 'DATA' ) ],
-    name=os.path.join('build\\pyi.win32\\electrum_dnotes', cmdline_name + "-portable.exe"),
+    name=os.path.join('build\\pyi.win32\\electrum-dnotes', cmdline_name + "-portable.exe"),
     debug=False,
     strip=None,
     upx=False,
-    icon=home+'icons/electrum_dnotes.ico',
+    icon=home+'icons/electrum-dnotes.ico',
     console=False)
 
 #####
@@ -115,11 +115,11 @@ exe_dependent = EXE(
     pyz,
     a.scripts,
     exclude_binaries=True,
-    name=os.path.join('build\\pyi.win32\\electrum_dnotes', cmdline_name),
+    name=os.path.join('build\\pyi.win32\\electrum-dnotes', cmdline_name),
     debug=False,
     strip=None,
     upx=False,
-    icon=home+'icons/electrum_dnotes.ico',
+    icon=home+'icons/electrum-dnotes.ico',
     console=False)
 
 coll = COLLECT(
@@ -130,6 +130,6 @@ coll = COLLECT(
     strip=None,
     upx=True,
     debug=False,
-    icon=home+'icons/electrum_dnotes.ico',
+    icon=home+'icons/electrum-dnotes.ico',
     console=False,
-    name=os.path.join('dist', 'electrum_dnotes'))
+    name=os.path.join('dist', 'electrum-dnotes'))

@@ -43,7 +43,7 @@ import sys
 import traceback
 
 
-server = ServerProxy('https://cosigner.electrum_dnotes.org/', allow_none=True)
+server = ServerProxy('https://cosigner.electrum-dnotes.org/', allow_none=True)
 
 
 class Listener(util.DaemonThread):

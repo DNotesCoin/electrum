@@ -281,7 +281,7 @@ issue #3374. Users should upgrade to 3.0.5.
     wallet password. Once the wallet is decrypted, only the public key
     is retained in memory, in order to save the encrypted file.
   * The daemon requires wallets to be explicitly loaded before
-    commands can use them. Wallets can be loaded using: 'electrum_dnotes
+    commands can use them. Wallets can be loaded using: 'electrum-dnotes
     daemon load_wallet [-w path]'. This command will require a
     password if the wallet is encrypted.
   * Invoices and contacts are stored in the wallet file and are no
@@ -585,13 +585,13 @@ issue #3374. Users should upgrade to 3.0.5.
    minimize the number of transaction inputs.
  * Plugins are loaded independently of the GUI. As a result, Openalias,
    TrustedCoin and TREZOR wallets can be used with the command
-   line. Example: 'electrum_dnotes payto <openalias> <amount>'
+   line. Example: 'electrum-dnotes payto <openalias> <amount>'
  * The command line has been refactored:
   - Arguments are parsed with argparse.
   - The inline help includes a description of options.
   - Some commands have been renamed. Notably, 'mktx' and 'payto' have
     been merged into a single command, with a --broadcast option.
-   Type 'electrum_dnotes --help' for a complete overview.
+   Type 'electrum-dnotes --help' for a complete overview.
  * The command line accepts the '!' syntax to send the maximum
    amount available. It can be combined with the '--from' option.
    Example: 'payto <destination> ! --from <from_address>'
@@ -601,7 +601,7 @@ issue #3374. Users should upgrade to 3.0.5.
    following commands: 'addrequest', 'rmrequest', 'listrequests'.
    Payment requests can be signed with a SSL certificate, and published
    as bip70 files in a public web directory. To see the relevant
-   configuration variables, type 'electrum_dnotes addrequest --help'
+   configuration variables, type 'electrum-dnotes addrequest --help'
  * Commands can be called with jsonrpc, using the 'jsonrpc' gui. The
    jsonrpc interface may be called by php.
 
@@ -646,10 +646,10 @@ issue #3374. Users should upgrade to 3.0.5.
  * The network daemon must be started explicitly before using commands
    that require a connection
    Example:
-     electrum_dnotes daemon start
-     electrum_dnotes getaddressunspent <addr>
-     electrum_dnotes daemon status
-     electrum_dnotes daemon stop
+     electrum-dnotes daemon start
+     electrum-dnotes getaddressunspent <addr>
+     electrum-dnotes daemon status
+     electrum-dnotes daemon stop
    If a daemon is running, the GUI will use it.
 
 # Release 2.0.3 - bugfixes and minor GUI improvements
@@ -726,7 +726,7 @@ issue #3374. Users should upgrade to 3.0.5.
  * The 'Send' tab in the Qt GUI supports transactions with multiple
    outputs, and raw hexadecimal scripts.
 
- * The GUI can connect to the Electrum daemon: "electrum_dnotes -d" will
+ * The GUI can connect to the Electrum daemon: "electrum-dnotes -d" will
    start the daemon if it is not already running, and the GUI will
    connect to it. The daemon can serve several clients. It times out
    if no client uses if for more than 5 minutes.
@@ -768,7 +768,7 @@ issue #3374. Users should upgrade to 3.0.5.
   a daemon, that remains connected and handles subsequent
   commands. The daemon terminates itself if it remains unused for more
   than one minute. The purpose of this is to make scripting more
-  efficient. For example, a bash script using many electrum_dnotes commands
+  efficient. For example, a bash script using many electrum-dnotes commands
   will open only one connection.
 
 # Release 1.9.7
@@ -876,7 +876,7 @@ versions of Electrum.
 
 * An interactive Python console replaces the 'Wall' tab. The provided
 python environment gives users access to the wallet and gui. Most
-electrum_dnotes commands are available as python function in the
+electrum-dnotes commands are available as python function in the
 console. Custom scripts an be loaded with a "run(filename)"
 command. Tab-completions are available.
 

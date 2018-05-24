@@ -20,7 +20,7 @@ class ElectrumGui:
         self.network = daemon.network
         storage = WalletStorage(config.get_wallet_path())
         if not storage.file_exists():
-            print("Wallet not found. try 'electrum_dnotes create'")
+            print("Wallet not found. try 'electrum-dnotes create'")
             exit()
         if storage.is_encrypted():
             password = getpass.getpass('Password:', stream=None)
@@ -392,7 +392,7 @@ class ElectrumGui:
                         self.show_message("Error:" + server + "\nIn doubt, type \"auto-connect\"")
                         return False
             if out.get('server') or out.get('proxy'):
-                proxy = electrum_dnotes.network.deserialize_proxy(out.get('proxy')) if out.get('proxy') else proxy_config
+                proxy = electrum-dnotes.network.deserialize_proxy(out.get('proxy')) if out.get('proxy') else proxy_config
                 self.network.set_parameters(host, port, protocol, proxy, auto_connect)
 
     def settings_dialog(self):

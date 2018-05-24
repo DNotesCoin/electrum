@@ -1,13 +1,13 @@
 # If you want Electrum to appear in a Linux app launcher ("start menu"), install this by doing:
-# sudo desktop-file-install electrum_dnotes.desktop
+# sudo desktop-file-install electrum-dnotes.desktop
 
 [Desktop Entry]
 Comment=Lightweight DNotes Client
-Exec=sh -c "PATH=\"\\$HOME/.local/bin:\\$PATH\" electrum_dnotes %u"
+Exec=sh -c "PATH=\"\\$HOME/.local/bin:\\$PATH\" electrum-dnotes %u"
 GenericName[en_US]=DNotes Wallet
 GenericName=DNotes Wallet
-Icon=electrum_dnotes
-Name[en_US]=electrum_dnotes
+Icon=electrum-dnotes
+Name[en_US]=electrum-dnotes
 Name=Electrum DNotes Wallet
 Categories=Finance;Network;
 StartupNotify=false
@@ -17,5 +17,5 @@ MimeType=x-scheme-handler/bitcoin;
 Actions=Testnet;
 
 [Desktop Action Testnet]
-Exec=sh -c "PATH=\"\\$HOME/.local/bin:\\$PATH\" electrum_dnotes --testnet %u"
+Exec=sh -c "PATH=\"\\$HOME/.local/bin:\\$PATH\" electrum-dnotes --testnet %u"
 Name=Testnet mode

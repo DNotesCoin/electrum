@@ -1,9 +1,9 @@
 include LICENCE RELEASE-NOTES AUTHORS
 include README.rst
-include electrum_dnotes.conf.sample
-include electrum_dnotes.desktop
+include electrum-dnotes.conf.sample
+include electrum-dnotes.desktop
 include *.py
-include electrum_dnotes
+include electrum-dnotes
 include contrib/requirements/requirements.txt
 include contrib/requirements/requirements-hw.txt
 recursive-include lib *.py

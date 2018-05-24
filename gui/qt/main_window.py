@@ -159,7 +159,7 @@ class ElectrumWindow(QMainWindow, MessageBoxMixin, PrintError):
         if self.config.get("is_maximized"):
             self.showMaximized()
 
-        self.setWindowIcon(QIcon(":icons/electrum_dnotes.png"))
+        self.setWindowIcon(QIcon(":icons/electrum-dnotes.png"))
         self.init_menubar()
 
         wrtabs = weakref.proxy(tabs)
@@ -540,9 +540,9 @@ class ElectrumWindow(QMainWindow, MessageBoxMixin, PrintError):
 
         help_menu = menubar.addMenu(_("&Help"))
         help_menu.addAction(_("&About"), self.show_about)
-        help_menu.addAction(_("&Official website"), lambda: webbrowser.open("https://electrum_dnotes.org"))
+        help_menu.addAction(_("&Official website"), lambda: webbrowser.open("https://electrum-dnotes.org"))
         help_menu.addSeparator()
-        help_menu.addAction(_("&Documentation"), lambda: webbrowser.open("http://docs.electrum_dnotes.org/")).setShortcut(QKeySequence.HelpContents)
+        help_menu.addAction(_("&Documentation"), lambda: webbrowser.open("http://docs.electrum-dnotes.org/")).setShortcut(QKeySequence.HelpContents)
         help_menu.addAction(_("&Report Bug"), self.show_report_bug)
         help_menu.addSeparator()
         help_menu.addAction(_("&Donate to server"), self.donate_to_server)
@@ -600,7 +600,7 @@ class ElectrumWindow(QMainWindow, MessageBoxMixin, PrintError):
         if self.tray:
             try:
                 # this requires Qt 5.9
-                self.tray.showMessage("Electrum DNotes", message, QIcon(":icons/electrum_dnotes_dark_icon"), 20000)
+                self.tray.showMessage("Electrum DNotes", message, QIcon(":icons/electrum-dnotes_dark_icon"), 20000)
             except TypeError:
                 self.tray.showMessage("Electrum DNotes", message, QSystemTrayIcon.Information, 20000)
 
@@ -819,7 +819,7 @@ class ElectrumWindow(QMainWindow, MessageBoxMixin, PrintError):
             _('Expiration date of your request.'),
             _('This information is seen by the recipient if you send them a signed payment request.'),
             _('Expired requests have to be deleted manually from your list, in order to free the corresponding DNotes addresses.'),
-            _('The DNotes address never expires and will always be part of this electrum_dnotes wallet.'),
+            _('The DNotes address never expires and will always be part of this electrum-dnotes wallet.'),
         ])
         grid.addWidget(HelpLabel(_('Request expires'), msg), 3, 0)
         grid.addWidget(self.expires_combo, 3, 1)
@@ -2398,7 +2398,7 @@ class ElectrumWindow(QMainWindow, MessageBoxMixin, PrintError):
         e.setReadOnly(True)
         vbox.addWidget(e)
 
-        defaultname = 'electrum_dnotes-private-keys.csv'
+        defaultname = 'electrum-dnotes-private-keys.csv'
         select_msg = _('Select file to export your private keys to')
         hbox, filename_e, csv_button = filename_field(self, self.config, defaultname, select_msg)
         vbox.addLayout(hbox)

@@ -16,7 +16,7 @@ class ElectrumGui:
         self.network = daemon.network
         storage = WalletStorage(config.get_wallet_path())
         if not storage.file_exists:
-            print("Wallet not found. try 'electrum_dnotes create'")
+            print("Wallet not found. try 'electrum-dnotes create'")
             exit()
         if storage.is_encrypted():
             password = getpass.getpass('Password:', stream=None)
@@ -208,12 +208,12 @@ class ElectrumGui:
             print(_('Error'))
 
     def network_dialog(self):
-        print("use 'electrum_dnotes setconfig server/proxy' to change your network settings")
+        print("use 'electrum-dnotes setconfig server/proxy' to change your network settings")
         return True
 
 
     def settings_dialog(self):
-        print("use 'electrum_dnotes setconfig' to change your settings")
+        print("use 'electrum-dnotes setconfig' to change your settings")
         return True
 
     def password_dialog(self):

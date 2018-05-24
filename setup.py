@@ -36,8 +36,8 @@ if platform.system() in ['Linux', 'FreeBSD', 'DragonFly']:
         else:
             usr_share = os.path.expanduser('~/.local/share')
     data_files += [
-        (os.path.join(usr_share, 'applications/'), ['electrum_dnotes.desktop']),
-        (os.path.join(usr_share, icons_dirname), ['icons/electrum_dnotes.png'])
+        (os.path.join(usr_share, 'applications/'), ['electrum-dnotes.desktop']),
+        (os.path.join(usr_share, icons_dirname), ['icons/electrum-dnotes.png'])
     ]
 
 setup(
@@ -48,30 +48,30 @@ setup(
         'full': requirements_hw + ['pycryptodomex'],
     },
     packages=[
-        'electrum_dnotes',
-        'electrum_dnotes_gui',
-        'electrum_dnotes_gui.qt',
-        'electrum_dnotes_plugins',
-        'electrum_dnotes_plugins.audio_modem',
-        'electrum_dnotes_plugins.cosigner_pool',
-        'electrum_dnotes_plugins.email_requests',
-        'electrum_dnotes_plugins.greenaddress_instant',
-        'electrum_dnotes_plugins.hw_wallet',
-        'electrum_dnotes_plugins.keepkey',
-        'electrum_dnotes_plugins.labels',
-        'electrum_dnotes_plugins.ledger',
-        'electrum_dnotes_plugins.trezor',
-        'electrum_dnotes_plugins.digitalbitbox',
-        'electrum_dnotes_plugins.trustedcoin',
-        'electrum_dnotes_plugins.virtualkeyboard',
+        'electrum-dnotes',
+        'electrum-dnotes_gui',
+        'electrum-dnotes_gui.qt',
+        'electrum-dnotes_plugins',
+        'electrum-dnotes_plugins.audio_modem',
+        'electrum-dnotes_plugins.cosigner_pool',
+        'electrum-dnotes_plugins.email_requests',
+        'electrum-dnotes_plugins.greenaddress_instant',
+        'electrum-dnotes_plugins.hw_wallet',
+        'electrum-dnotes_plugins.keepkey',
+        'electrum-dnotes_plugins.labels',
+        'electrum-dnotes_plugins.ledger',
+        'electrum-dnotes_plugins.trezor',
+        'electrum-dnotes_plugins.digitalbitbox',
+        'electrum-dnotes_plugins.trustedcoin',
+        'electrum-dnotes_plugins.virtualkeyboard',
     ],
     package_dir={
-        'electrum_dnotes': 'lib',
-        'electrum_dnotes_gui': 'gui',
-        'electrum_dnotes_plugins': 'plugins',
+        'electrum-dnotes': 'lib',
+        'electrum-dnotes_gui': 'gui',
+        'electrum-dnotes_plugins': 'plugins',
     },
     package_data={
-        'electrum_dnotes': [
+        'electrum-dnotes': [
             'servers.json',
             'servers_testnet.json',
             'servers_regtest.json',
@@ -80,10 +80,10 @@ setup(
             'checkpoints_testnet.json',
             'www/index.html',
             'wordlist/*.txt',
-            'locale/*/LC_MESSAGES/electrum_dnotes.mo',
+            'locale/*/LC_MESSAGES/electrum-dnotes.mo',
         ]
     },
-    scripts=['electrum_dnotes'],
+    scripts=['electrum-dnotes'],
     data_files=data_files,
     description="Lightweight DNotes Wallet",
     author="Thomas Voegtlin",

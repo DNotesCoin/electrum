@@ -2,7 +2,7 @@
 
 # Parameterize
 PYTHON_VERSION=3.6.4
-BUILDDIR=/tmp/electrum_dnotes-build
+BUILDDIR=/tmp/electrum-dnotes-build
 PACKAGE=Electrum DNotes
 GIT_REPO=https://github.com/DNotesCoin/electrum-dnotes
 
@@ -43,11 +43,11 @@ mkdir $BUILDDIR
 
 info "Downloading icons and locale..."
 for repo in icons locale; do
-  git clone $GIT_REPO-$repo $BUILDDIR/electrum_dnotes-$repo
+  git clone $GIT_REPO-$repo $BUILDDIR/electrum-dnotes-$repo
 done
 
-cp -R $BUILDDIR/electrum_dnotes-locale/locale/ ./lib/locale/
-cp    $BUILDDIR/electrum_dnotes-icons/icons_rc.py ./gui/qt/
+cp -R $BUILDDIR/electrum-dnotes-locale/locale/ ./lib/locale/
+cp    $BUILDDIR/electrum-dnotes-icons/icons_rc.py ./gui/qt/
 
 
 info "Downloading libusb..."
@@ -78,4 +78,4 @@ info "Building binary"
 pyinstaller --noconfirm --ascii --name $VERSION contrib/build-osx/osx.spec || fail "Could not build binary"
 
 info "Creating .DMG"
-hdiutil create -fs HFS+ -volname $PACKAGE -srcfolder dist/$PACKAGE.app dist/electrum_dnotes-$VERSION.dmg || fail "Could not create .DMG"
+hdiutil create -fs HFS+ -volname $PACKAGE -srcfolder dist/$PACKAGE.app dist/electrum-dnotes-$VERSION.dmg || fail "Could not create .DMG"

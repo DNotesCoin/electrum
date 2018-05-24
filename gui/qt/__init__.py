@@ -98,7 +98,7 @@ class ElectrumGui:
         if hasattr(QtCore.Qt, "AA_ShareOpenGLContexts"):
             QtCore.QCoreApplication.setAttribute(QtCore.Qt.AA_ShareOpenGLContexts)
         if hasattr(QGuiApplication, 'setDesktopFileName'):
-            QGuiApplication.setDesktopFileName('electrum_dnotes.desktop')
+            QGuiApplication.setDesktopFileName('electrum-dnotes.desktop')
         self.config = config
         self.daemon = daemon
         self.plugins = plugins
@@ -138,9 +138,9 @@ class ElectrumGui:
 
     def tray_icon(self):
         if self.dark_icon:
-            return QIcon(':icons/electrum_dnotes_dark_icon.png')
+            return QIcon(':icons/electrum-dnotes_dark_icon.png')
         else:
-            return QIcon(':icons/electrum_dnotes_light_icon.png')
+            return QIcon(':icons/electrum-dnotes_light_icon.png')
 
     def toggle_tray_icon(self):
         self.dark_icon = not self.dark_icon

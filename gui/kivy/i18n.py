@@ -37,7 +37,7 @@ class _(str):
     def switch_lang(lang):
         # get the right locales directory, and instanciate a gettext
         from electrum_dnotes.i18n import LOCALE_DIR
-        locales = gettext.translation('electrum_dnotes', LOCALE_DIR, languages=[lang], fallback=True)
+        locales = gettext.translation('electrum-dnotes', LOCALE_DIR, languages=[lang], fallback=True)
         _.lang = locales.gettext
         for label in _.observers:
             try:

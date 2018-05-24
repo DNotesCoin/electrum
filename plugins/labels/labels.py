@@ -16,19 +16,19 @@ class LabelsPlugin(BasePlugin):
 
     def __init__(self, parent, config, name):
         BasePlugin.__init__(self, parent, config, name)
-        self.target_host = 'labels.electrum_dnotes.org'
+        self.target_host = 'labels.electrum-dnotes.org'
         self.wallets = {}
 
     def encode(self, wallet, msg):
         password, iv, wallet_id = self.wallets[wallet]
-        encrypted = electrum_dnotes.bitcoin.aes_encrypt_with_iv(password, iv,
+        encrypted = electrum-dnotes.bitcoin.aes_encrypt_with_iv(password, iv,
                                                          msg.encode('utf8'))
         return base64.b64encode(encrypted).decode()
 
     def decode(self, wallet, message):
         password, iv, wallet_id = self.wallets[wallet]
         decoded = base64.b64decode(message)
-        decrypted = electrum_dnotes.bitcoin.aes_decrypt_with_iv(password, iv, decoded)
+        decrypted = electrum-dnotes.bitcoin.aes_decrypt_with_iv(password, iv, decoded)
         return decrypted.decode('utf8')
 
     def get_nonce(self, wallet):

@@ -718,7 +718,7 @@ class Transaction:
                 return 0x41
             elif x_pubkey[0:2] == 'ff':  # bip32 extended pubkey
                 return 0x21
-            elif x_pubkey[0:2] == 'fe':  # old electrum_dnotes extended pubkey
+            elif x_pubkey[0:2] == 'fe':  # old electrum-dnotes extended pubkey
                 return 0x41
         except Exception as e:
             pass

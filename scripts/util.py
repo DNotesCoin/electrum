@@ -5,7 +5,7 @@ from electrum_dnotes import Connection, Interface, SimpleConfig
 from electrum_dnotes.network import parse_servers
 from collections import defaultdict
 
-# electrum_dnotes.util.set_verbosity(1)
+# electrum-dnotes.util.set_verbosity(1)
 def get_interfaces(servers, timeout=10):
     '''Returns a map of servers to connected interfaces.  If any
     connections fail or timeout, they will be missing from the map.

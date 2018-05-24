@@ -9,8 +9,8 @@ theming:
 prepare:
 	# running pre build setup
 	@cp tools/buildozer.spec ../../buildozer.spec
-	# copy electrum_dnotes to main.py
-	@cp ../../electrum_dnotes ../../main.py
+	# copy electrum-dnotes to main.py
+	@cp ../../electrum-dnotes ../../main.py
 	@-if [ ! -d "../../.buildozer" ];then \
 		cd ../..; buildozer android debug;\
 		cp -f gui/kivy/tools/blacklist.txt .buildozer/android/platform/python-for-android/src/blacklist.txt;\
@@ -26,7 +26,7 @@ release:
 	@make clean
 clean:
 	# Cleaning up
-	# rename main.py to electrum_dnotes
+	# rename main.py to electrum-dnotes
 	@-rm ../../main.py
 	# remove buildozer.spec
 	@-rm ../../buildozer.spec

@@ -4,7 +4,7 @@ fullname = _('Two Factor Authentication')
 description = ''.join([
     _("This plugin adds two-factor authentication to your wallet."), '<br/>',
     _("For more information, visit"),
-    " <a href=\"https://api.trustedcoin.com/#/electrum_dnotes-help\">https://api.trustedcoin.com/#/electrum_dnotes-help</a>"
+    " <a href=\"https://api.trustedcoin.com/#/electrum-dnotes-help\">https://api.trustedcoin.com/#/electrum-dnotes-help</a>"
 ])
 requires_wallet_type = ['2fa']
 registers_wallet_type = '2fa'

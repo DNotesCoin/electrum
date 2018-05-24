@@ -1419,7 +1419,7 @@ class Abstract_Wallet(PrintError):
     def cpfp(self, tx, fee):
         txid = tx.txid()
         for i, o in enumerate(tx.outputs()):
-            otype, address, value = o
+            otype, address, value, _ = o
             if otype == TYPE_ADDRESS and self.is_mine(address):
                 break
         else:

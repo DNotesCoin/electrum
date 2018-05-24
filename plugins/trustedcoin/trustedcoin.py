@@ -123,7 +123,7 @@ class TrustedCoinCosignerClient(object):
         else:
             return response.text
 
-    def get_terms_of_service(self, billing_plan='electrum_dnotes-per-tx-otp'):
+    def get_terms_of_service(self, billing_plan='electrum-dnotes-per-tx-otp'):
         """
         Returns the TOS for the given billing plan as a plain/text unicode string.
         :param billing_plan: the plan to return the terms for
@@ -131,7 +131,7 @@ class TrustedCoinCosignerClient(object):
         payload = {'billing_plan': billing_plan}
         return self.send_request('get', 'tos', payload)
 
-    def create(self, xpubkey1, xpubkey2, email, billing_plan='electrum_dnotes-per-tx-otp'):
+    def create(self, xpubkey1, xpubkey2, email, billing_plan='electrum-dnotes-per-tx-otp'):
         """
         Creates a new cosigner resource.
         :param xpubkey1: a bip32 extended public key (customarily the hot key)

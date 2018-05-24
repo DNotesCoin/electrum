@@ -81,7 +81,7 @@ def command(s):
             wallet = args[0].wallet
             password = kwargs.get('password')
             if c.requires_wallet and wallet is None:
-                raise Exception("wallet not loaded. Use 'electrum_dnotes daemon load_wallet'")
+                raise Exception("wallet not loaded. Use 'electrum-dnotes daemon load_wallet'")
             if c.requires_password and password is None and wallet.has_password():
                 return {'error': 'Password required' }
             return func(*args, **kwargs)
@@ -294,7 +294,7 @@ class Commands:
     @command('')
     def dumpprivkeys(self):
         """Deprecated."""
-        return "This command is deprecated. Use a pipe instead: 'electrum_dnotes listaddresses | electrum_dnotes getprivatekeys - '"
+        return "This command is deprecated. Use a pipe instead: 'electrum-dnotes listaddresses | electrum-dnotes getprivatekeys - '"
 
     @command('')
     def validateaddress(self, address):
@@ -747,10 +747,10 @@ config_variables = {
         'requests_dir': 'directory where a bip70 file will be written.',
         'ssl_privkey': 'Path to your SSL private key, needed to sign the request.',
         'ssl_chain': 'Chain of SSL certificates, needed for signed requests. Put your certificate at the top and the root CA at the end',
-        'url_rewrite': 'Parameters passed to str.replace(), in order to create the r= part of DNotes: URIs. Example: \"(\'file:///var/www/\',\'https://electrum_dnotes.org/\')\"',
+        'url_rewrite': 'Parameters passed to str.replace(), in order to create the r= part of DNotes: URIs. Example: \"(\'file:///var/www/\',\'https://electrum-dnotes.org/\')\"',
     },
     'listrequests':{
-        'url_rewrite': 'Parameters passed to str.replace(), in order to create the r= part of DNotes: URIs. Example: \"(\'file:///var/www/\',\'https://electrum_dnotes.org/\')\"',
+        'url_rewrite': 'Parameters passed to str.replace(), in order to create the r= part of DNotes: URIs. Example: \"(\'file:///var/www/\',\'https://electrum-dnotes.org/\')\"',
     }
 }
 
@@ -814,8 +814,8 @@ def add_network_options(parser):
 def add_global_options(parser):
     group = parser.add_argument_group('global options')
     group.add_argument("-v", "--verbose", action="store_true", dest="verbose", default=False, help="Show debugging information")
-    group.add_argument("-D", "--dir", dest="electrum_dnotes_path", help="electrum_dnotes directory")
-    group.add_argument("-P", "--portable", action="store_true", dest="portable", default=False, help="Use local 'electrum_dnotes_data' directory")
+    group.add_argument("-D", "--dir", dest="electrum-dnotes_path", help="electrum-dnotes directory")
+    group.add_argument("-P", "--portable", action="store_true", dest="portable", default=False, help="Use local 'electrum-dnotes_data' directory")
     group.add_argument("-w", "--wallet", dest="wallet_path", help="wallet path")
     group.add_argument("--testnet", action="store_true", dest="testnet", default=False, help="Use Testnet")
     group.add_argument("--regtest", action="store_true", dest="regtest", default=False, help="Use Regtest")
@@ -823,7 +823,7 @@ def add_global_options(parser):
 def get_parser():
     # create main parser
     parser = argparse.ArgumentParser(
-        epilog="Run 'electrum_dnotes help <command>' to see the help for a command")
+        epilog="Run 'electrum-dnotes help <command>' to see the help for a command")
     add_global_options(parser)
     subparsers = parser.add_subparsers(dest='cmd', metavar='<command>')
     # gui

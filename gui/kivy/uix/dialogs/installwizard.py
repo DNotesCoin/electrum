@@ -28,7 +28,7 @@ test_xpub = "xpub661MyMwAqRbcEbvVtRRSjqxVnaWVUMewVzMiURAKyYratih4TtBpMypzzefmv8z
 
 Builder.load_string('''
 #:import Window kivy.core.window.Window
-#:import _ electrum_dnotes_gui.kivy.i18n._
+#:import _ electrum-dnotes_gui.kivy.i18n._
 
 
 <WizardTextInput@TextInput>
@@ -73,7 +73,7 @@ Builder.load_string('''
             size: Window.size
 
     crcontent: crcontent
-    # add electrum_dnotes icon
+    # add electrum-dnotes icon
     BoxLayout:
         orientation: 'vertical' if self.width < self.height else 'horizontal'
         padding:

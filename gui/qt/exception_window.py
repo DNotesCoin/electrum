@@ -53,7 +53,7 @@ issue_template = """<h2>Traceback</h2>
   <li>Locale: {locale}</li>
 </ul>
 """
-report_server = "https://crashhub.electrum_dnotes.org/crash"
+report_server = "https://crashhub.electrum-dnotes.org/crash"
 
 
 class Exception_Window(QWidget, MessageBoxMixin):
@@ -111,7 +111,7 @@ class Exception_Window(QWidget, MessageBoxMixin):
         self.show()
 
     def send_report(self):
-        if constants.net.GENESIS[-4:] not in ["4943", "e26f"] and ".electrum_dnotes.org" in report_server:
+        if constants.net.GENESIS[-4:] not in ["4943", "e26f"] and ".electrum-dnotes.org" in report_server:
             # Gah! Some kind of altcoin wants to send us crash reports.
             self.main_window.show_critical(_("Please report this issue manually."))
             return

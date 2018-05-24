@@ -478,7 +478,7 @@ class TrezorPlugin(HW_PluginBase):
 
         return outputs
 
-    def electrum_dnotes_tx_to_txtype(self, tx):
+    def electrum-dnotes_tx_to_txtype(self, tx):
         t = self.types.TransactionType()
         if tx is None:
             # probably for segwit input and we don't need this prev txn
@@ -497,4 +497,4 @@ class TrezorPlugin(HW_PluginBase):
     # This function is called from the TREZOR libraries (via tx_api)
     def get_tx(self, tx_hash):
         tx = self.prev_tx[tx_hash]
-        return self.electrum_dnotes_tx_to_txtype(tx)
+        return self.electrum-dnotes_tx_to_txtype(tx)
