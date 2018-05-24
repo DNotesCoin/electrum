@@ -35,7 +35,6 @@ datas = [
     (home+'lib/servers_testnet.json', 'electrum-dnotes'),
     (home+'lib/checkpoints_testnet.json', 'electrum-dnotes'),
     (home+'lib/wordlist/english.txt', 'electrum-dnotes/wordlist'),
-    #(home+'lib/locale', 'electrum-dnotes/locale'),
     (home+'plugins', 'electrum-dnotes_plugins'),
     ('C:\\Program Files (x86)\\ZBar\\bin\\', '.')
 ]
