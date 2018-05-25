@@ -1113,6 +1113,10 @@ class ElectrumWindow(QMainWindow, MessageBoxMixin, PrintError):
             else:
                 self.config.set_key('fee_per_kb', fee_rate, False)
 
+            #TODO: should find out the root cause of why feerate_e can be None here, but for now added this
+            if not hasattr(self,'feerate_e'):
+                return
+
             if fee_rate:
                 self.feerate_e.setAmount(fee_rate // 1000)
             else:
