@@ -29,13 +29,13 @@ binaries = [(PYHOME+"/libusb-1.0.dll", ".")]
 binaries += [b for b in collect_dynamic_libs('PyQt5') if 'qwindowsvista' in b[0]]
 
 datas = [
-    (home+'lib/currencies.json', 'electrum-dnotes'),
-    (home+'lib/servers.json', 'electrum-dnotes'),
-    (home+'lib/checkpoints.json', 'electrum-dnotes'),
-    (home+'lib/servers_testnet.json', 'electrum-dnotes'),
-    (home+'lib/checkpoints_testnet.json', 'electrum-dnotes'),
-    (home+'lib/wordlist/english.txt', 'electrum-dnotes/wordlist'),
-    (home+'plugins', 'electrum-dnotes_plugins'),
+    (home+'lib/currencies.json', 'electrum_dnotes'),
+    (home+'lib/servers.json', 'electrum_dnotes'),
+    (home+'lib/checkpoints.json', 'electrum_dnotes'),
+    (home+'lib/servers_testnet.json', 'electrum_dnotes'),
+    (home+'lib/checkpoints_testnet.json', 'electrum_dnotes'),
+    (home+'lib/wordlist/english.txt', 'electrum_dnotes/wordlist'),
+    (home+'plugins', 'electrum_dnotes_plugins'),
     ('C:\\Program Files (x86)\\ZBar\\bin\\', '.')
 ]
 datas += collect_data_files('trezorlib')

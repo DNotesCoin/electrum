@@ -53,7 +53,7 @@ rm -rf $WINEPREFIX/drive_c/electrum-dnotes
 cp -r electrum-dnotes $WINEPREFIX/drive_c/electrum-dnotes
 cp electrum-dnotes/LICENCE .
 #cp -r electrum-dnotes-locale/locale $WINEPREFIX/drive_c/electrum-dnotes/lib/
-#cp electrum-dnotes-icons/icons_rc.py $WINEPREFIX/drive_c/electrum-dnotes/gui/qt/
+cp ../../../gui/qt/icons_rc.py $WINEPREFIX/drive_c/electrum-dnotes/gui/qt/
 
 # Install frozen dependencies
 $PYTHON -m pip install -r ../../deterministic-build/requirements.txt

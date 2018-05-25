@@ -6,7 +6,7 @@ import sys
 import os
 
 PACKAGE='Electrum DNotes'
-PYPKG='electrum-dnotes'
+PYPKG='electrum_dnotes'
 MAIN_SCRIPT='electrum-dnotes'
 ICONS_FILE='electrum-dnotes.icns'
 

@@ -4,6 +4,9 @@
 build/
 dist/
 *.egg/
+*.egg-info/
+*~
+.vscode/
 /electrum-dnotes.py
 contrib/pyinstaller/
 Electrum.egg-info/
@@ -17,6 +20,7 @@ env/
 .buildozer/
 bin/
 /app.fil
+contrib/build-wine/tmp/
 
 # tox files
 .cache/
