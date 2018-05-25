@@ -492,8 +492,8 @@ class ElectrumWindow(QMainWindow, MessageBoxMixin, PrintError):
         labels_menu.addAction(_("&Export"), self.do_export_labels)
         history_menu = wallet_menu.addMenu(_("&History"))
         history_menu.addAction(_("&Filter"), lambda: self.history_list.toggle_toolbar(self.config))
-        history_menu.addAction(_("&Summary"), self.history_list.show_summary)
-        history_menu.addAction(_("&Plot"), self.history_list.plot_history_dialog)
+        #history_menu.addAction(_("&Summary"), self.history_list.show_summary)
+        #history_menu.addAction(_("&Plot"), self.history_list.plot_history_dialog)
         history_menu.addAction(_("&Export"), self.history_list.export_history_dialog)
         contacts_menu = wallet_menu.addMenu(_("Contacts"))
         contacts_menu.addAction(_("&New"), self.new_contact_dialog)
@@ -522,7 +522,7 @@ class ElectrumWindow(QMainWindow, MessageBoxMixin, PrintError):
         # Settings / Preferences are all reserved keywords in macOS using this as work around
         tools_menu.addAction(_("Electrum DNotes preferences") if sys.platform == 'darwin' else _("Preferences"), self.settings_dialog)
         tools_menu.addAction(_("&Network"), lambda: self.gui_object.show_network_dialog(self))
-        tools_menu.addAction(_("&Plugins"), self.plugins_dialog)
+        #tools_menu.addAction(_("&Plugins"), self.plugins_dialog)
         tools_menu.addSeparator()
         tools_menu.addAction(_("&Sign/verify message"), self.sign_verify_message)
         tools_menu.addAction(_("&Encrypt/decrypt message"), self.encrypt_message)
@@ -540,12 +540,12 @@ class ElectrumWindow(QMainWindow, MessageBoxMixin, PrintError):
 
         help_menu = menubar.addMenu(_("&Help"))
         help_menu.addAction(_("&About"), self.show_about)
-        help_menu.addAction(_("&Official website"), lambda: webbrowser.open("https://electrum-dnotes.org"))
+        help_menu.addAction(_("&Official website"), lambda: webbrowser.open("https://github.com/DNotesCoin/electrum-dnotes"))
         help_menu.addSeparator()
-        help_menu.addAction(_("&Documentation"), lambda: webbrowser.open("http://docs.electrum-dnotes.org/")).setShortcut(QKeySequence.HelpContents)
+        help_menu.addAction(_("&Documentation"), lambda: webbrowser.open("https://github.com/DNotesCoin/electrum-dnotes")).setShortcut(QKeySequence.HelpContents)
         help_menu.addAction(_("&Report Bug"), self.show_report_bug)
         help_menu.addSeparator()
-        help_menu.addAction(_("&Donate to server"), self.donate_to_server)
+        #help_menu.addAction(_("&Donate to server"), self.donate_to_server)
 
         self.setMenuBar(menubar)
 
@@ -566,7 +566,7 @@ class ElectrumWindow(QMainWindow, MessageBoxMixin, PrintError):
     def show_report_bug(self):
         msg = ' '.join([
             _("Please report any bugs as issues on github:<br/>"),
-            "<a href=\"https://github.com/DNotesCoin/electrum-DNotes/issues\">https://github.com/DNotesCoin/electrum-DNotes/issues</a><br/><br/>",
+            "<a href=\"https://github.com/DNotesCoin/electrum-dnotes/issues\">https://github.com/DNotesCoin/electrum-dnotes/issues</a><br/><br/>",
             _("Before reporting a bug, upgrade to the most recent version of Electrum DNotes (latest release or git HEAD), and include the version number in your report."),
             _("Try to explain not only what the bug is, but how it occurs.")
          ])
@@ -1181,7 +1181,7 @@ class ElectrumWindow(QMainWindow, MessageBoxMixin, PrintError):
         vbox_feelabel = QVBoxLayout()
         vbox_feelabel.addWidget(self.fee_e_label)
         vbox_feelabel.addStretch(1)
-        grid.addLayout(vbox_feelabel, 6, 0)
+        #grid.addLayout(vbox_feelabel, 6, 0)
 
         self.fee_adv_controls = QWidget()
         hbox = QHBoxLayout(self.fee_adv_controls)
@@ -1196,7 +1196,7 @@ class ElectrumWindow(QMainWindow, MessageBoxMixin, PrintError):
         vbox_feecontrol.addWidget(self.fee_adv_controls)
         vbox_feecontrol.addWidget(self.fee_slider)
 
-        grid.addLayout(vbox_feecontrol, 6, 1, 1, -1)
+        #grid.addLayout(vbox_feecontrol, 6, 1, 1, -1)
 
         if not self.config.get('show_fee', False):
             self.fee_adv_controls.setVisible(False)
@@ -1210,7 +1210,7 @@ class ElectrumWindow(QMainWindow, MessageBoxMixin, PrintError):
         buttons.addWidget(self.clear_button)
         buttons.addWidget(self.preview_button)
         buttons.addWidget(self.send_button)
-        grid.addLayout(buttons, 7, 1, 1, 3)
+        grid.addLayout(buttons, 6, 1, 1, 3)
 
         self.amount_e.shortcut.connect(self.spend_max)
         self.payto_e.textChanged.connect(self.update_fee)
@@ -1485,7 +1485,7 @@ class ElectrumWindow(QMainWindow, MessageBoxMixin, PrintError):
             self.show_error(_('No outputs'))
             return
 
-        for _type, addr, amount, _ in outputs:
+        for _type, addr, amount, invoice in outputs:
             if addr is None:
                 self.show_error(_('DNotes Address is None'))
                 return
@@ -1557,8 +1557,8 @@ class ElectrumWindow(QMainWindow, MessageBoxMixin, PrintError):
             msg.append( _("Additional fees") + ": " + self.format_amount_and_units(x_fee_amount) )
 
         confirm_rate = simple_config.FEERATE_WARNING_HIGH_FEE
-        if fee > confirm_rate * tx.estimated_size() / 1000:
-            msg.append(_('Warning') + ': ' + _("The fee for this transaction seems unusually high."))
+        #if fee > confirm_rate * tx.estimated_size() / 1000:
+            #msg.append(_('Warning') + ': ' + _("The fee for this transaction seems unusually high."))
 
         if self.wallet.has_keystore_encryption():
             msg.append("")
@@ -2632,7 +2632,7 @@ class ElectrumWindow(QMainWindow, MessageBoxMixin, PrintError):
                 self.config.set_key("language", lang_request, True)
                 self.need_restart = True
         lang_combo.currentIndexChanged.connect(on_lang)
-        gui_widgets.append((lang_label, lang_combo))
+        #gui_widgets.append((lang_label, lang_combo))
 
         nz_help = _('Number of zeros displayed after the decimal point. For example, if this is set to 2, "1." will be displayed as "1.00"')
         nz_label = HelpLabel(_('Zeros after decimal point') + ':', nz_help)
@@ -2781,7 +2781,7 @@ class ElectrumWindow(QMainWindow, MessageBoxMixin, PrintError):
             be_result = block_explorers[block_ex_combo.currentIndex()]
             self.config.set_key('block_explorer', be_result, True)
         block_ex_combo.currentIndexChanged.connect(on_be)
-        gui_widgets.append((block_ex_label, block_ex_combo))
+        #gui_widgets.append((block_ex_label, block_ex_combo))
 
         from electrum_dnotes import qrscanner
         system_cameras = qrscanner._find_system_cameras()
@@ -2797,7 +2797,7 @@ class ElectrumWindow(QMainWindow, MessageBoxMixin, PrintError):
         qr_combo.setEnabled(qrscanner.libzbar is not None)
         on_video_device = lambda x: self.config.set_key("video_device", qr_combo.itemData(x), True)
         qr_combo.currentIndexChanged.connect(on_video_device)
-        gui_widgets.append((qr_label, qr_combo))
+        #gui_widgets.append((qr_label, qr_combo))
 
         usechange_cb = QCheckBox(_('Use change addresses'))
         usechange_cb.setChecked(self.wallet.use_change)
@@ -2969,11 +2969,11 @@ class ElectrumWindow(QMainWindow, MessageBoxMixin, PrintError):
         fiat_widgets.append((QLabel(_('Source')), ex_combo))
 
         tabs_info = [
-            (fee_widgets, _('Fees')),
+            #(fee_widgets, _('Fees')),
             (tx_widgets, _('Transactions')),
             (gui_widgets, _('Appearance')),
-            (fiat_widgets, _('Fiat')),
-            (id_widgets, _('Identity')),
+            #(fiat_widgets, _('Fiat')),
+            #(id_widgets, _('Identity')),
         ]
         for widgets, name in tabs_info:
             tab = QWidget()

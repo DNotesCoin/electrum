@@ -348,15 +348,16 @@ class HistoryList(MyTreeWidget, AcceptFileDragDrop):
             # note: the current implementation of RBF *needs* the old tx fee
             rbf = is_mine and not tx.is_final() and fee is not None
             if rbf:
-                menu.addAction(_("Increase fee"), lambda: self.parent.bump_fee_dialog(tx))
+                pass
+                #menu.addAction(_("Increase fee"), lambda: self.parent.bump_fee_dialog(tx))
             else:
                 child_tx = self.wallet.cpfp(tx, 0)
                 if child_tx:
                     menu.addAction(_("Child pays for parent"), lambda: self.parent.cpfp(tx, child_tx))
         if pr_key:
             menu.addAction(self.icon_cache.get(":icons/seal"), _("View invoice"), lambda: self.parent.show_invoice(pr_key))
-        if tx_URL:
-            menu.addAction(_("View on block explorer"), lambda: webbrowser.open(tx_URL))
+        #if tx_URL:
+            #menu.addAction(_("View on block explorer"), lambda: webbrowser.open(tx_URL))
         menu.exec_(self.viewport().mapToGlobal(position))
 
     def remove_local_tx(self, delete_tx):

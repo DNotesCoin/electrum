@@ -1399,9 +1399,9 @@ class Abstract_Wallet(PrintError):
         s = sorted(s, key=lambda x: x[2])
         for o in s:
             i = outputs.index(o)
-            otype, address, value = o
+            otype, address, value, invoice = o
             if value - delta >= self.dust_threshold():
-                outputs[i] = otype, address, value - delta
+                outputs[i] = otype, address, value - delta, invoice
                 delta = 0
                 break
             else:

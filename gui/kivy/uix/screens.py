@@ -283,8 +283,8 @@ class SendScreen(CScreen):
             _("Amount to be sent") + ": " + self.app.format_amount_and_units(amount),
             _("Mining fee") + ": " + self.app.format_amount_and_units(fee),
         ]
-        if fee >= config.get('confirm_fee', 100000):
-            msg.append(_('Warning')+ ': ' + _("The fee for this transaction seems unusually high."))
+        #if fee >= config.get('confirm_fee', 100000):
+            #msg.append(_('Warning')+ ': ' + _("The fee for this transaction seems unusually high."))
         msg.append(_("Enter your PIN code to proceed"))
         self.app.protected('\n'.join(msg), self.send_tx, (tx, message))
 

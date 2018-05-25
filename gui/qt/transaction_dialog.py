@@ -247,8 +247,8 @@ class TxDialog(QDialog, MessageBoxMixin):
             fee_rate = fee/size*1000
             fee_str += '  ( %s ) ' % self.main_window.format_fee_rate(fee_rate)
             confirm_rate = simple_config.FEERATE_WARNING_HIGH_FEE
-            if fee_rate > confirm_rate:
-                fee_str += ' - ' + _('Warning') + ': ' + _("high fee") + '!'
+            #if fee_rate > confirm_rate:
+                #fee_str += ' - ' + _('Warning') + ': ' + _("high fee") + '!'
         self.amount_label.setText(amount_str)
         self.fee_label.setText(fee_str)
         self.size_label.setText(size_str)

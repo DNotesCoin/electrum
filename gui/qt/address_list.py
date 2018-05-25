@@ -168,8 +168,8 @@ class AddressList(MyTreeWidget):
             if can_delete:
                 menu.addAction(_("Remove from wallet"), lambda: self.parent.remove_address(addr))
             addr_URL = block_explorer_URL(self.config, 'addr', addr)
-            if addr_URL:
-                menu.addAction(_("View on block explorer"), lambda: webbrowser.open(addr_URL))
+            #if addr_URL:
+                #menu.addAction(_("View on block explorer"), lambda: webbrowser.open(addr_URL))
 
             if not self.wallet.is_frozen(addr):
                 menu.addAction(_("Freeze"), lambda: self.parent.set_frozen_state([addr], True))
