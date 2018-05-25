@@ -98,9 +98,9 @@ class SimpleConfig(PrintError):
         set_config(self)
 
     def electrum_dnotes_path(self):
-        # Read electrum-dnotes_path from command line
+        # Read electrum_dnotes_path from command line
         # Otherwise use the user's default data directory.
-        path = self.get('electrum-dnotes_path')
+        path = self.get('electrum_dnotes_path')
         if path is None:
             path = self.user_dir()
 

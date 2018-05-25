@@ -30,10 +30,10 @@ from kivy.metrics import inch
 from kivy.lang import Builder
 
 ## lazy imports for factory so that widgets can be used in kv
-#Factory.register('InstallWizard', module='electrum-dnotes_gui.kivy.uix.dialogs.installwizard')
-#Factory.register('InfoBubble', module='electrum-dnotes_gui.kivy.uix.dialogs')
-#Factory.register('OutputList', module='electrum-dnotes_gui.kivy.uix.dialogs')
-#Factory.register('OutputItem', module='electrum-dnotes_gui.kivy.uix.dialogs')
+#Factory.register('InstallWizard', module='electrum_dnotes_gui.kivy.uix.dialogs.installwizard')
+#Factory.register('InfoBubble', module='electrum_dnotes_gui.kivy.uix.dialogs')
+#Factory.register('OutputList', module='electrum_dnotes_gui.kivy.uix.dialogs')
+#Factory.register('OutputItem', module='electrum_dnotes_gui.kivy.uix.dialogs')
 
 from .uix.dialogs.installwizard import InstallWizard
 from .uix.dialogs import InfoBubble
@@ -48,14 +48,14 @@ util = False
 
 # register widget cache for keeping memory down timeout to forever to cache
 # the data
-Cache.register('electrum-dnotes_widgets', timeout=0)
+Cache.register('electrum_dnotes_widgets', timeout=0)
 
 from kivy.uix.screenmanager import Screen
 from kivy.uix.tabbedpanel import TabbedPanel
 from kivy.uix.label import Label
 from kivy.core.clipboard import Clipboard
 
-Factory.register('TabbedCarousel', module='electrum-dnotes_gui.kivy.uix.screens')
+Factory.register('TabbedCarousel', module='electrum_dnotes_gui.kivy.uix.screens')
 
 # Register fonts without this you won't be able to use bold/italic...
 # inside markup.
@@ -395,7 +395,7 @@ class ElectrumWindow(App):
         from jnius import autoclass, cast
         from android import activity
         PythonActivity = autoclass('org.kivy.android.PythonActivity')
-        SimpleScannerActivity = autoclass("org.electrum-dnotes.qr.SimpleScannerActivity")
+        SimpleScannerActivity = autoclass("org.electrum_dnotes.qr.SimpleScannerActivity")
         Intent = autoclass('android.content.Intent')
         intent = Intent(PythonActivity.mActivity, SimpleScannerActivity)
 
@@ -578,13 +578,13 @@ class ElectrumWindow(App):
 
         #setup lazy imports for mainscreen
         Factory.register('AnimatedPopup',
-                         module='electrum-dnotes_gui.kivy.uix.dialogs')
+                         module='electrum_dnotes_gui.kivy.uix.dialogs')
         Factory.register('QRCodeWidget',
-                         module='electrum-dnotes_gui.kivy.uix.qrcodewidget')
+                         module='electrum_dnotes_gui.kivy.uix.qrcodewidget')
 
         # preload widgets. Remove this if you want to load the widgets on demand
-        #Cache.append('electrum-dnotes_widgets', 'AnimatedPopup', Factory.AnimatedPopup())
-        #Cache.append('electrum-dnotes_widgets', 'QRCodeWidget', Factory.QRCodeWidget())
+        #Cache.append('electrum_dnotes_widgets', 'AnimatedPopup', Factory.AnimatedPopup())
+        #Cache.append('electrum_dnotes_widgets', 'QRCodeWidget', Factory.QRCodeWidget())
 
         # load and focus the ui
         self.root.manager = self.root.ids['manager']

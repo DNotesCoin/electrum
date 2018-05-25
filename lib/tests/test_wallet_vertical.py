@@ -324,7 +324,7 @@ class TestWalletSending(TestCaseForTestnet):
     def setUpClass(cls):
         super().setUpClass()
         cls.electrum_dnotes_path = tempfile.mkdtemp()
-        cls.config = SimpleConfig({'electrum-dnotes_path': cls.electrum_dnotes_path})
+        cls.config = SimpleConfig({'electrum_dnotes_path': cls.electrum_dnotes_path})
 
     @classmethod
     def tearDownClass(cls):
