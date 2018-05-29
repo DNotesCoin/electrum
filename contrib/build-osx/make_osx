@@ -41,13 +41,14 @@ rm -rf ./dist
 rm  -rf $BUILDDIR > /dev/null 2>&1
 mkdir $BUILDDIR
 
-info "Downloading icons and locale..."
-for repo in icons locale; do
-  git clone $GIT_REPO-$repo $BUILDDIR/electrum-dnotes-$repo
-done
+#info "Downloading icons and locale..."
+#for repo in icons locale; do
+  #git clone $GIT_REPO-$repo $BUILDDIR/electrum-dnotes-$repo
+#done
 
-cp -R $BUILDDIR/electrum-dnotes-locale/locale/ ./lib/locale/
-cp    $BUILDDIR/electrum-dnotes-icons/icons_rc.py ./gui/qt/
+#cp -R $BUILDDIR/electrum-dnotes-locale/locale/ ./lib/locale/
+#cp    $BUILDDIR/electrum-dnotes-icons/icons_rc.py ./gui/qt/
+cp $BUILDDIR/electrum-dnotes/gui/qt/icons_rc.py ./gui/qt
 
 
 info "Downloading libusb..."
