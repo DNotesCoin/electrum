@@ -40,7 +40,8 @@ RE_ALIAS = '(.*?)\s*\<([1-9A-HJ-NP-Za-km-z]{26,})\>'
 frozen_style = "QWidget { background-color:none; border:none;}"
 normal_style = "QPlainTextEdit { }"
 
-class PayToEdit(CompletionTextEdit): #, ScanQRTextEdit):
+class PayToEdit(CompletionTextEdit): 
+#, ScanQRTextEdit):
 
     def __init__(self, win):
         CompletionTextEdit.__init__(self)
