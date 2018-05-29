@@ -128,7 +128,7 @@ class PayToEdit(CompletionTextEdit):
         self.payto_address = None
         if len(lines) == 1:
             data = lines[0]
-            if data.startswith("bitcoin:"):
+            if data.startswith("dnotes:"):
                 self.scan_f(data)
                 return
             try:
@@ -202,7 +202,7 @@ class PayToEdit(CompletionTextEdit):
 
     def qr_input(self):
         data = super(PayToEdit,self).qr_input()
-        if data.startswith("bitcoin:"):
+        if data.startswith("dnotes:"):
             self.scan_f(data)
             # TODO: update fee
 

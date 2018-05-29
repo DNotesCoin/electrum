@@ -132,7 +132,7 @@ Section
   CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\${PRODUCT_NAME} Testnet.lnk" "$INSTDIR\electrum-dnotes-${PRODUCT_VERSION}.exe" "--testnet" "$INSTDIR\electrum-dnotes-${PRODUCT_VERSION}.exe" 0
 
 
-  ;Links bitcoin: URI's to Electrum
+  ;Links dnotes: URI's to Electrum
   WriteRegStr HKCU "Software\Classes\dnotes" "" "URL:dnotes Protocol"
   WriteRegStr HKCU "Software\Classes\dnotes" "URL Protocol" ""
   WriteRegStr HKCU "Software\Classes\dnotes" "DefaultIcon" "$\"$INSTDIR\electrum-dnotes.ico, 0$\""
