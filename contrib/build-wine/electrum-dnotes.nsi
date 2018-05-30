@@ -8,7 +8,7 @@
 
   !define PRODUCT_NAME "Electrum DNotes"
   !define PRODUCT_WEB_SITE "https://github.com/DNotesCoin/electrum-dnotes"
-  !define PRODUCT_PUBLISHER "Electrum Technologies GmbH"
+  !define PRODUCT_PUBLISHER "DNotes Global"
   !define PRODUCT_UNINST_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_NAME}"
 
 ;--------------------------------
