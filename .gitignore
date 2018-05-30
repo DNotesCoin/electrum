@@ -10,7 +10,7 @@ dist/
 /electrum-dnotes.py
 contrib/pyinstaller/
 Electrum.egg-info/
-gui/qt/icons_rc.py
+#gui/qt/icons_rc.py
 locale/
 .devlocaltmp/
 *_trial_temp
