@@ -134,8 +134,12 @@ class Blockchain(util.PrintError):
         return self.get_hash(self.get_checkpoint()).lstrip('00')[0:10]
 
     def check_header(self, header):
-        header_hash = hash_header(header)
         height = header.get('block_height')
+        if height > 0:
+            header_hash = hash_header(header)
+        elif serialize_header(header)[:160] == constants.net.GENESISHEADER:
+            #workaround for x13 hash function install issue on windows
+            header_hash = constants.net.GENESIS
         return header_hash == self.get_hash(height)
 
     def fork(parent, header):
@@ -157,13 +161,15 @@ class Blockchain(util.PrintError):
         self._size = os.path.getsize(p)//80 if os.path.exists(p) else 0
 
     def verify_header(self, header, prev_hash, target):
-        _hash = hash_header(header)
+        #workaround for x13 hash function install issue on windows
+        if prev_hash == '0000000000000000000000000000000000000000000000000000000000000000' and serialize_header(header)[:160] == constants.net.GENESISHEADER:
+            _hash = constants.net.GENESIS
+        else:
+            _hash = hash_header(header)
         if prev_hash != header.get('prev_block_hash'):
             raise Exception("prev hash mismatch: %s vs %s" % (prev_hash, header.get('prev_block_hash')))
         if constants.net.TESTNET:
             return
-        #DNotes - assume local daemon is trusted and we don't need to recheck proof of stake, proof
-        #   of work checking from bitcoin here will be incorrect
         #bits = self.target_to_bits(target)
         #if bits != header.get('bits'):
             #raise Exception("bits mismatch: %s vs %s" % (bits, header.get('bits')))
@@ -184,9 +190,14 @@ class Blockchain(util.PrintError):
             numAddresses = vds.read_compact_size() # # address balances
             if numAddresses > 0: #29 bytes in an address listing
                 vds.read_bytes(numAddresses*29) 
-            header = deserialize_header(raw_header, index*2016 + i)
+            #workaround for x13 hash function install issue on windows
+            height = index*2016 + i
+            header = deserialize_header(raw_header, height)
             self.verify_header(header, prev_hash, target)
-            prev_hash = hash_header(header)
+            if height > 0:
+                prev_hash = hash_header(header)
+            else:
+                prev_hash = constants.net.GENESIS
             i += 1
             trimmedData += raw_header
 
@@ -352,7 +363,9 @@ class Blockchain(util.PrintError):
             #self.print_error("cannot connect at height", height)
             return False
         if height == 0:
-            return hash_header(header) == constants.net.GENESIS
+            #workaround for x13 hash function install issue on windows
+            #return hash_header(header) == constants.net.GENESIS
+            return serialize_header(header)[:160] == constants.net.GENESISHEADER
         try:
             prev_hash = self.get_hash(height - 1)
         except:
