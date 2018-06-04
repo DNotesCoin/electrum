@@ -3,7 +3,7 @@
 # Parameterize
 PYTHON_VERSION=3.6.4
 BUILDDIR=/tmp/electrum-dnotes-build
-PACKAGE=Electrum DNotes
+PACKAGE=Electrum-DNotes
 GIT_REPO=https://github.com/DNotesCoin/electrum-dnotes
 
 . $(dirname "$0")/base.sh
