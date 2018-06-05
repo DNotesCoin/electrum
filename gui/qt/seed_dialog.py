@@ -124,7 +124,7 @@ class SeedLayout(QVBoxLayout):
 
         # options
         self.is_bip39 = False
-        self.is_ext = False
+        self.is_ext = True
         if options:
             opt_button = EnterButton(_('Options'), self.seed_options)
             hbox.addWidget(opt_button)
