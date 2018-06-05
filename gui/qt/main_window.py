@@ -124,7 +124,7 @@ class ElectrumWindow(QMainWindow, MessageBoxMixin, PrintError):
         self.create_status_bar()
         self.need_update = threading.Event()
 
-        self.decimal_point = config.get('decimal_point', 5)
+        self.decimal_point = config.get('decimal_point', 8)
         self.num_zeros     = int(config.get('num_zeros',0))
 
         self.completions = QStringListModel()
@@ -145,7 +145,7 @@ class ElectrumWindow(QMainWindow, MessageBoxMixin, PrintError):
             tab.tab_description = description
             tab.tab_pos = len(tabs)
             tab.tab_name = name
-            if self.config.get('show_{}_tab'.format(name), False):
+            if self.config.get('show_{}_tab'.format(name), tab.tab_name == 'addresses'):
                 tabs.addTab(tab, icon, description.replace("&", ""))
 
         add_optional_tab(tabs, self.addresses_tab, QIcon(":icons/tab_addresses.png"), _("&Addresses"), "addresses")

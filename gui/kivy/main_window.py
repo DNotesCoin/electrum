@@ -158,7 +158,7 @@ class ElectrumWindow(App):
         self._trigger_update_history()
 
     def _get_bu(self):
-        return self.electrum_dnotes_config.get('base_unit', 'mNOTE')
+        return self.electrum_dnotes_config.get('base_unit', 'NOTE')
 
     def _set_bu(self, value):
         assert value in base_units.keys()
