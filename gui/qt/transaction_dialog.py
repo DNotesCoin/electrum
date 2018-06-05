@@ -307,10 +307,13 @@ class TxDialog(QDialog, MessageBoxMixin):
         o_text.setReadOnly(True)
         o_text.setMaximumHeight(100)
         cursor = o_text.textCursor()
-        for addr, v in self.tx.get_outputs():
+        for addr, v, i in self.tx.get_outputs():
             cursor.insertText(addr, text_format(addr))
             if v is not None:
                 cursor.insertText('\t', ext)
                 cursor.insertText(format_amount(v), ext)
+            if i is not None:
+                cursor.insertText('\t', ext)
+                cursor.insertText(i.strip(), ext)
             cursor.insertBlock()
         vbox.addWidget(o_text)

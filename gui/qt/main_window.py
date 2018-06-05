@@ -1659,6 +1659,9 @@ class ElectrumWindow(QMainWindow, MessageBoxMixin, PrintError):
         self.amount_e.setFrozen(b)
         self.max_button.setEnabled(not b)
 
+    def lock_invoice(self, b):
+        self.invoice_e.setFrozen(b)
+
     def prepare_for_payment_request(self):
         self.show_send_tab()
         self.payto_e.is_pr = True

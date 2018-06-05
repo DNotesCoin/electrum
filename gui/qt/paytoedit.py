@@ -77,10 +77,24 @@ class PayToEdit(CompletionTextEdit):
         self.setStyleSheet(util.ColorScheme.RED.as_stylesheet(True))
 
     def parse_address_and_amount(self, line):
-        x, y = line.split(',')
+        pc = line.split(',')
+        x = pc[0]
+        y = ''
+        invoice = ''
+        amount = None
+        if len(pc) > 1:
+            y = pc[1]
+            pc = y.split('+')
+            y = pc[0]
+        else:
+            pc = x.split('+')
+            x = pc[0]            
+        if len(pc)>1:
+            invoice = pc[1].strip()
         out_type, out = self.parse_output(x)
-        amount = self.parse_amount(y)
-        return out_type, out, amount
+        if y:
+            amount = self.parse_amount(y)
+        return out_type, out, amount, invoice
 
     def parse_output(self, x):
         try:
@@ -125,6 +139,7 @@ class PayToEdit(CompletionTextEdit):
         lines = [i for i in self.lines() if i]
         outputs = []
         total = 0
+        invoice = ''
         self.payto_address = None
         if len(lines) == 1:
             data = lines[0]
@@ -142,16 +157,23 @@ class PayToEdit(CompletionTextEdit):
         is_max = False
         for i, line in enumerate(lines):
             try:
-                _type, to_address, amount = self.parse_address_and_amount(line)
+                _type, to_address, amount, cur_invoice = self.parse_address_and_amount(line)
             except:
                 self.errors.append((i, line.strip()))
                 continue
 
-            outputs.append((_type, to_address, amount, ''))
             if amount == '!':
                 is_max = True
-            else:
+            elif amount:
                 total += amount
+
+            amount = 0 if not amount else amount
+            outputs.append((_type, to_address, amount, cur_invoice))
+            
+            if invoice and invoice != cur_invoice:
+                invoice = 'Multiple'
+            else:
+                invoice = cur_invoice
 
         self.win.is_max = is_max
         self.outputs = outputs
@@ -160,8 +182,12 @@ class PayToEdit(CompletionTextEdit):
         if self.win.is_max:
             self.win.do_update_fee()
         else:
+            total = None if total == 0 else total
             self.amount_edit.setAmount(total if outputs else None)
             self.win.lock_amount(total or len(lines)>1)
+
+        self.invoice_num.setText(invoice)
+        self.win.lock_invoice(invoice != '')
 
     def get_errors(self):
         return self.errors

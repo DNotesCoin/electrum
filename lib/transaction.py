@@ -1101,11 +1101,11 @@ class Transaction:
                 addr = bitcoin.public_key_to_p2pkh(bfh(x))
             else:
                 addr = 'SCRIPT ' + x
-            o.append((addr,v))      # consider using yield (addr, v)
+            o.append((addr,v, i))      # consider using yield (addr, v)
         return o
 
     def get_output_addresses(self):
-        return [addr for addr, val in self.get_outputs()]
+        return [addr for addr, val, i in self.get_outputs()]
 
 
     def has_address(self, addr):
