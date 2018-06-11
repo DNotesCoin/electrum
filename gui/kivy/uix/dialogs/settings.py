@@ -29,12 +29,12 @@ Builder.load_string('''
                 size_hint: 1, None
                 height: self.minimum_height
                 padding: '10dp'
-                SettingsItem:
-                    lang: settings.get_language_name()
-                    title: 'Language' + ': ' + str(self.lang)
-                    description: _('Language')
-                    action: partial(root.language_dialog, self)
-                CardSeparator
+                #SettingsItem:
+                    #lang: settings.get_language_name()
+                    #title: 'Language' + ': ' + str(self.lang)
+                    #description: _('Language')
+                    #action: partial(root.language_dialog, self)
+                #CardSeparator
                 SettingsItem:
                     disabled: root.disable_pin
                     title: _('PIN code')
@@ -47,28 +47,28 @@ Builder.load_string('''
                     description: _("Base unit for DNotes amounts.")
                     action: partial(root.unit_dialog, self)
                 CardSeparator
-                SettingsItem:
-                    status: root.fx_status()
-                    title: _('Fiat Currency') + ': ' + self.status
-                    description: _("Display amounts in fiat currency.")
-                    action: partial(root.fx_dialog, self)
-                CardSeparator
+                #SettingsItem:
+                    #status: root.fx_status()
+                    #title: _('Fiat Currency') + ': ' + self.status
+                    #description: _("Display amounts in fiat currency.")
+                    #action: partial(root.fx_dialog, self)
+                #CardSeparator
                 SettingsItem:
                     status: 'ON' if bool(app.plugins.get('labels')) else 'OFF'
                     title: _('Labels Sync') + ': ' + self.status
                     description: _("Save and synchronize your labels.")
                     action: partial(root.plugin_dialog, 'labels', self)
                 CardSeparator
-                SettingsItem:
-                    status: 'ON' if app.use_rbf else 'OFF'
-                    title: _('Replace-by-fee') + ': ' + self.status
-                    description: _("Create replaceable transactions.")
-                    message:
-                        _('If you check this box, your transactions will be marked as non-final,') \
-                        + ' ' + _('and you will have the possibility, while they are unconfirmed, to replace them with transactions that pays higher fees.') \
-                        + ' ' + _('Note that some merchants do not accept non-final transactions until they are confirmed.')
-                    action: partial(root.boolean_dialog, 'use_rbf', _('Replace by fee'), self.message)
-                CardSeparator
+                #SettingsItem:
+                    #status: 'ON' if app.use_rbf else 'OFF'
+                    #title: _('Replace-by-fee') + ': ' + self.status
+                    #description: _("Create replaceable transactions.")
+                    #message:
+                        #_('If you check this box, your transactions will be marked as non-final,') \
+                        #+ ' ' + _('and you will have the possibility, while they are unconfirmed, to replace them with transactions that pays higher fees.') \
+                        #+ ' ' + _('Note that some merchants do not accept non-final transactions until they are confirmed.')
+                    #action: partial(root.boolean_dialog, 'use_rbf', _('Replace by fee'), self.message)
+                #CardSeparator
                 SettingsItem:
                     status: _('Yes') if app.use_unconfirmed else _('No')
                     title: _('Spend unconfirmed') + ': ' + self.status
