@@ -13,7 +13,7 @@ from .choice_dialog import ChoiceDialog
 
 Builder.load_string('''
 #:import partial functools.partial
-#:import _ electrum-dnotes_gui.kivy.i18n._
+#:import _ electrum_dnotes_gui.kivy.i18n._
 
 <SettingsDialog@Popup>
     id: settings

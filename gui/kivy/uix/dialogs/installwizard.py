@@ -28,7 +28,7 @@ test_xpub = "xpub661MyMwAqRbcEbvVtRRSjqxVnaWVUMewVzMiURAKyYratih4TtBpMypzzefmv8z
 
 Builder.load_string('''
 #:import Window kivy.core.window.Window
-#:import _ electrum-dnotes_gui.kivy.i18n._
+#:import _ electrum_dnotes_gui.kivy.i18n._
 
 
 <WizardTextInput@TextInput>
