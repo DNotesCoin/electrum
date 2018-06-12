@@ -204,12 +204,13 @@ class OutputList(Factory.GridLayout):
 
     def update(self, outputs):
         self.clear_widgets()
-        for (type, address, amount) in outputs:
-            self.add_output(address, amount)
+        for (type, address, amount, invoice) in outputs:
+            self.add_output(address, amount, invoice)
 
-    def add_output(self, address, amount):
+    def add_output(self, address, amount, invoice):
         b = Factory.OutputItem()
         b.address = address
+        b.invoice = invoice
         b.value = self.app.format_amount_and_units(amount)
         self.add_widget(b)
 

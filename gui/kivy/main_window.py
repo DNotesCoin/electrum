@@ -839,6 +839,14 @@ class ElectrumWindow(App):
         d = LabelDialog(_('Enter description'), text, callback)
         d.open()
 
+    def invoice_dialog(self, screen):
+        from .uix.dialogs.label_dialog import LabelDialog
+        text = screen.invoice
+        def callback(text):
+            screen.invoice = text
+        d = LabelDialog(_('Enter invoice'), text, callback)
+        d.open()
+
     def amount_dialog(self, screen, show_max):
         from .uix.dialogs.amount_dialog import AmountDialog
         amount = screen.amount

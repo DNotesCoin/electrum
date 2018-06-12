@@ -172,13 +172,14 @@ class SendScreen(CScreen):
     def set_URI(self, text):
         import electrum_dnotes
         try:
-            uri = electrum-dnotes.util.parse_URI(text, self.app.on_pr)
+            uri = electrum_dnotes.util.parse_URI(text, self.app.on_pr)
         except:
             self.app.show_info(_("Not a DNotes URI"))
             return
         amount = uri.get('amount')
         self.screen.address = uri.get('address', '')
         self.screen.message = uri.get('message', '')
+        self.screen.invoice = uri.get('invoice', '')
         self.screen.amount = self.app.format_amount_and_units(amount) if amount else ''
         self.payment_request = None
         self.screen.is_pr = False
@@ -189,6 +190,7 @@ class SendScreen(CScreen):
     def do_clear(self):
         self.screen.amount = ''
         self.screen.message = ''
+        self.screen.invoice = ''
         self.screen.address = ''
         self.payment_request = None
         self.screen.is_pr = False
@@ -253,7 +255,7 @@ class SendScreen(CScreen):
             except:
                 self.app.show_error(_('Invalid amount') + ':\n' + self.screen.amount)
                 return
-            outputs = [(bitcoin.TYPE_ADDRESS, address, amount, '')]
+            outputs = [(bitcoin.TYPE_ADDRESS, address, amount, self.screen.invoice)]
         message = self.screen.message
         amount = sum(map(lambda x:x[2], outputs))
         if self.app.electrum_dnotes_config.get('use_rbf'):

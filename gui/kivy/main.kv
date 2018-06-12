@@ -94,6 +94,7 @@
 <OutputItem>
     address: ''
     value: ''
+    invoice: ''
     size_hint_y: None
     height: max(lbl1.height, lbl2.height)
     TopLabel
@@ -111,6 +112,16 @@
         font_size: '6pt'
         size_hint_x: 0.35
         halign: 'right'
+    TopLabel:
+        id: lbl3
+        text: '[ref=%s]%s[/ref]'%(root.invoice, root.invoice)
+        font_size: '6pt'
+        shorten: True
+        size_hint_x: 0.65
+        halign: 'right'
+        on_ref_press:
+            app._clipboard.copy(root.invoice)
+            app.show_info(_('Invoice copied to clipboard') + ' ' + root.invoice)
 
 
 <OutputList>
