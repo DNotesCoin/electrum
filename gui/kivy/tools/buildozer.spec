@@ -1,7 +1,7 @@
 [app]
 
 # (str) Title of your application
-title = Electrum-DNotes
+title = Electrum DNotes
 
 # (str) Package name
 package.name = ElectrumDNotes
