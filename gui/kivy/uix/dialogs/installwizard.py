@@ -525,7 +525,7 @@ class LineDialog(WizardDialog):
 class ShowSeedDialog(WizardDialog):
     seed_text = StringProperty('')
     message = _("If you forget your PIN or lose your device, your seed phrase will be the only way to recover your funds.")
-    ext = False
+    ext = True
 
     def __init__(self, wizard, **kwargs):
         super(ShowSeedDialog, self).__init__(wizard, **kwargs)
@@ -565,7 +565,7 @@ class RestoreSeedDialog(WizardDialog):
         self.ids.text_input_seed.text = test_seed if is_test else ''
         self.message = _('Please type your seed phrase using the virtual keyboard.')
         self.title = _('Enter Seed')
-        self.ext = False
+        self.ext = True
 
     def options_dialog(self):
         from .seed_options import SeedOptionsDialog
