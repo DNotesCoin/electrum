@@ -1,4 +1,6 @@
 *.apk
+*.dmg
+*.app
 ####-*.patch
 *.pyc
 *.swp
