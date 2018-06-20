@@ -663,6 +663,21 @@ class Commands:
         to config settings (static/dynamic)"""
         return self.config.fee_per_kb()
 
+    @command('w')
+    def loadvaultlog(self): #, infilepath, outfilepath):
+        """Loads a log of vault transactions and outputs a list of unsigned transactions"""
+        return "hello world: this is the loadvaultlog command"
+
+    @command('wp')
+    def signtransactionsbulk(self): #, infilepath, outfilepath, password = None):
+        """Loads a list of unsigned transactions in bulk and signs them"""
+        return "hello world: this is the signtransactionsbulk command"
+
+    @command('w')
+    def broadcasttransactionsbulk(self): #, infilepath):
+        """Loads a list of signed transactions in bulk broadcasts them to the network"""
+        return "hello world: this is the broadcasttransactionsbulk command"
+
     @command('')
     def help(self):
         # for the python console
