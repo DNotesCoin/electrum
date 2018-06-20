@@ -23,11 +23,11 @@ for repo in electrum-dnotes; do
     if [ -d $repo ]; then
 	cd $repo
 	git pull
-	git checkout master
+	git checkout vault_features
 	cd ..
     else
-	URL=https://github.com/DNotesCoin/$repo.git
-	git clone -b master $URL $repo
+	URL=https://github.com/DNotesCoin/tree/vault_features
+	git clone -b vault_features $URL $repo
     fi
 done
 
