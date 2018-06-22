@@ -664,19 +664,48 @@ class Commands:
         return self.config.fee_per_kb()
 
     @command('w')
-    def loadvaultlog(self): #, infilepath, outfilepath):
-        """Loads a log of vault transactions and outputs a list of unsigned transactions"""
-        return "hello world: this is the loadvaultlog command"
+    def loadvaultlog(self, infilepath, outfilepath):
+        """Loads a log of vault transactions and outputs a list of unsigned transactions"""     
+        transactions = self.wallet.vault_log_to_unsigned(infilepath, self.config)
+        out_contents = '[' + ',\n'.join(json.dumps(t.as_dict(), indent=4) for t in transactions) + ']'
+        with open(outfilepath, 'w') as f: 
+            f.write(out_contents)
+        return "{} transactions written to {}".format(len(transactions),outfilepath)
 
     @command('wp')
-    def signtransactionsbulk(self): #, infilepath, outfilepath, password = None):
+    def signtransactionsbulk(self, infilepath, outfilepath, password = None):
         """Loads a list of unsigned transactions in bulk and signs them"""
-        return "hello world: this is the signtransactionsbulk command"
+        tx_dicts = []
+        transactions = []
+        with open(infilepath,'r') as f:
+            data = f.read()
+            tx_dicts = json.loads(data,parse_float=lambda x: str(Decimal(x)))
 
-    @command('w')
-    def broadcasttransactionsbulk(self): #, infilepath):
+        for tx_dict in tx_dicts:
+            tx = Transaction(tx_dict["hex"])
+            transactions.append(tx)
+
+        transactions = self.wallet.sign_transactions_bulk(transactions, password)
+        out_contents = '[' + ',\n'.join(json.dumps(t.as_dict(), indent=4) for t in transactions) + ']'
+        with open(outfilepath, 'w') as f:
+            f.write(out_contents)
+
+        return "{} transaction signed and written to {}".format(len(transactions),outfilepath)
+
+    @command('n')
+    def broadcasttransactionsbulk(self, infilepath, timeout=30):
         """Loads a list of signed transactions in bulk broadcasts them to the network"""
-        return "hello world: this is the broadcasttransactionsbulk command"
+        tx_dicts = []
+        transactions = []
+        with open(infilepath,'r') as f:
+            data = f.read()
+            tx_dicts = json.loads(data,parse_float=lambda x: str(Decimal(x)))
+
+        for tx_dict in tx_dicts:
+            tx = Transaction(tx_dict["hex"])
+            self.network.broadcast(tx, timeout)       
+        
+        return "{} broadcast to the network".format(len(transactions))
 
     @command('')
     def help(self):
