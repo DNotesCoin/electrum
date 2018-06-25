@@ -696,16 +696,17 @@ class Commands:
     def broadcasttransactionsbulk(self, infilepath, timeout=30):
         """Loads a list of signed transactions in bulk broadcasts them to the network"""
         tx_dicts = []
-        transactions = []
         with open(infilepath,'r') as f:
             data = f.read()
             tx_dicts = json.loads(data,parse_float=lambda x: str(Decimal(x)))
 
         for tx_dict in tx_dicts:
             tx = Transaction(tx_dict["hex"])
-            self.network.broadcast(tx, timeout)       
+            success, message = self.network.broadcast(tx, timeout)       
+            if not success:
+                print(message)
         
-        return "{} broadcast to the network".format(len(transactions))
+        return "{} broadcast to the network".format(len(tx_dicts))
 
     @command('')
     def help(self):

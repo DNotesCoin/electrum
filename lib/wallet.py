@@ -1851,9 +1851,8 @@ class Abstract_Wallet(PrintError):
         except:
             raise
 
-        for line in file_content:
-            #TODO: real vault file has more fields
-            _, _, from_address, to_address, amount = line.split('\t')
+        for line in file_content[1:]:
+            _, _, from_address, to_address, amount, _, _ = line.split('\t')
 
             if not from_address in address_map:
                 address_map[from_address] = []
@@ -1888,7 +1887,7 @@ class Abstract_Wallet(PrintError):
                     change = list(filter(lambda o:o[1] == address,outputs))
                 print('change {}'.format(change))
 
-                #create a placeholder tx id sha256(tx_count), so we can identify dependent transactions later
+                #create a placeholder tx id as sha256(tx_count), so we can identify dependent transactions later
                 print('hash of {} is {}'.format(tx_count,bh2u(sha256(str(tx_count)))))
                 print('outputs of {} are {}'.format(tx_count,outputs))
                 if change:
