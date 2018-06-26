@@ -92,7 +92,7 @@ exe_standalone = EXE(
     strip=None,
     upx=False,
     icon=home+'icons/electrum-dnotes.ico',
-    console=True)
+    console=False)
     # console=True makes an annoying black box pop up, but it does make Electrum output command line commands, with this turned off no output will be given but commands can still be used
 
 exe_portable = EXE(
@@ -105,7 +105,7 @@ exe_portable = EXE(
     strip=None,
     upx=False,
     icon=home+'icons/electrum-dnotes.ico',
-    console=True)
+    console=False)
 
 #####
 # exe and separate files that NSIS uses to build installer "setup" exe
@@ -119,7 +119,7 @@ exe_dependent = EXE(
     strip=None,
     upx=False,
     icon=home+'icons/electrum-dnotes.ico',
-    console=True)
+    console=False)
 
 coll = COLLECT(
     exe_dependent,
@@ -130,5 +130,5 @@ coll = COLLECT(
     upx=True,
     debug=False,
     icon=home+'icons/electrum-dnotes.ico',
-    console=True,
+    console=False,
     name=os.path.join('dist', 'electrum-dnotes'))
