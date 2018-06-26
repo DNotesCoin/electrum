@@ -1838,8 +1838,103 @@ class Abstract_Wallet(PrintError):
             else:
                 p = self.price_at_timestamp(txid, price_func)
                 return p * txin_value/Decimal(COIN)
+    
+    def vault_log_to_unsigned(self, infile, config):
+        """Takes a DNotes vault log and converts to unsigned transactions"""
+        from electrum_dnotes.util import bh2u
+        address_map = {}
+        transactions = []
+
+        try:
+            with open(infile, "r") as f:
+                file_content = f.readlines()
+        except:
+            raise
+
+        for line in file_content[1:]:
+            _, _, from_address, to_address, amount, _, _ = line.split('\t')
+
+            if not from_address in address_map:
+                address_map[from_address] = []
+            address_map[from_address].append((to_address,amount))
+
+        tx_count = 0
+        for address in address_map:
+            coins = self.get_addr_utxo(address).values()
+            #print('coins {}'.format(coins))
+            for payee, amount in address_map[address]:
+                amount = int(Decimal(amount)*100000000)
+                outputs = [(TYPE_ADDRESS,payee,amount,'')]
+                print("payee {} amount {}".format(payee,amount))
+                print("coins {}".format(coins))
+                tx = self.make_unsigned_transaction(coins, outputs, config, fixed_fee = 500000)
+                transactions.append(tx)
+
+                #remove the used coins from the coin collection
+                tx_count += 1
+                inputs = tx.inputs()
+                coins_to_remove = []
+                for i in inputs:
+                    prevout_n = i['prevout_n']
+                    prevout_hash = i['prevout_hash']
+                    coins_to_remove.extend(filter(lambda c: c['prevout_n']==prevout_n and c['prevout_hash']==prevout_hash,coins))
+                coins = [coin for coin in coins if coin not in coins_to_remove]
+
+                #add the change coin as a new coin to use for later transactions
+                outputs = tx.outputs()
+                change = None
+                if len(outputs) > 1:
+                    change = list(filter(lambda o:o[1] == address,outputs))
+                print('change {}'.format(change))
+
+                #create a placeholder tx id as sha256(tx_count), so we can identify dependent transactions later
+                print('hash of {} is {}'.format(tx_count,bh2u(sha256(str(tx_count)))))
+                print('outputs of {} are {}'.format(tx_count,outputs))
+                if change:
+                    for c in change:
+                        _, _, change_amount, _ = c
+                        change_coin = {'address': address, 'value': change_amount, 'prevout_n': outputs.index(c),
+                            'prevout_hash': bh2u(sha256(str(tx_count))), 'height': 0, 'is_cb': 0}
+                        coins.append(change_coin)
+        
+        return transactions
+
+    def sign_transactions_bulk(self, in_txs, password):
+        tx_hashes = None
+        tx_count = 0
+        out_txs = []
+        for tx in in_txs:
+            tx_count += 1
+            temp_tx_id = bh2u(sha256(str(tx_count)))
+            inputs = tx.inputs()
+
+            #look for placeholder hashes from dependent transactions
+            if tx_hashes:
+                inputs = tx.inputs()
+                placeholder_inputs = list(filter(lambda i: i['prevout_hash'] in tx_hashes, inputs))
+                if len(placeholder_inputs) > 0:
+                    tx_ser = tx.serialize()
+                    print('placeholder inputs {}'.format(placeholder_inputs))
+                    print('tx hashes {}'.format(tx_hashes))
+                    for pi in placeholder_inputs:
+                        print('hash to replace {}'.format(bh2u(bfh(pi['prevout_hash'])[::-1])))
+                        print('replacement hash {}'.format(bh2u(bfh(tx_hashes[pi['prevout_hash']])[::-1])))
+                        tx_ser = tx_ser.replace(bh2u(bfh(pi['prevout_hash'])[::-1]),bh2u(bfh(tx_hashes[pi['prevout_hash']])[::-1]))
+                    tx = Transaction(tx_ser)                        
 
 
+            self.sign_transaction(tx,password)
+            print('signing tx {}'.format(tx_count))
+            if not tx_hashes:
+                tx_hashes = {temp_tx_id: tx.txid()}
+            else:
+                tx_hashes[temp_tx_id] = tx.txid()
+
+            out_txs.append(tx)
+        return out_txs
+            
+
+            
 class Simple_Wallet(Abstract_Wallet):
     # wallet with a single keystore
 
