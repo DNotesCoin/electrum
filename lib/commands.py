@@ -670,7 +670,7 @@ class Commands:
         out_contents = '[' + ',\n'.join(json.dumps(t.as_dict(), indent=4) for t in transactions) + ']'
         with open(outfilepath, 'w') as f: 
             f.write(out_contents)
-        return "{} transactions written to {}".format(len(transactions),outfilepath)
+        return "SUCCESS: {} transactions written to {}".format(len(transactions),outfilepath)
 
     @command('wp')
     def signtransactionsbulk(self, infilepath, outfilepath, password = None):
@@ -690,7 +690,7 @@ class Commands:
         with open(outfilepath, 'w') as f:
             f.write(out_contents)
 
-        return "{} transaction signed and written to {}".format(len(transactions),outfilepath)
+        return "SUCCESS: {} transaction signed and written to {}".format(len(transactions),outfilepath)
 
     @command('n')
     def broadcasttransactionsbulk(self, infilepath, timeout=30):
@@ -706,7 +706,7 @@ class Commands:
             if not success:
                 print(message)
         
-        return "{} broadcast to the network".format(len(tx_dicts))
+        return "SUCCESS: {} transactions broadcast to the network".format(len(tx_dicts))
 
     @command('')
     def help(self):
