@@ -3,6 +3,7 @@ import threading
 import time
 import os
 import stat
+import math
 
 from copy import deepcopy
 
@@ -10,6 +11,8 @@ from . import util
 from .util import (user_dir, print_error, PrintError,
                    NoDynamicFeeEstimates, format_fee_satoshis)
 from .i18n import _
+
+from decimal import Decimal
 
 FEE_ETA_TARGETS = [25, 10, 5, 2]
 FEE_DEPTH_TARGETS = [10000000, 5000000, 2000000, 1000000, 500000, 200000, 100000]
@@ -482,8 +485,10 @@ class SimpleConfig(PrintError):
         # The GUI for simplicity reasons only displays integer sat/byte,
         # and for the sake of consistency, we thus only use integer sat/byte in
         # the backend too.
-        fee_per_byte = int(fee_per_kb / 1000)
-        fee = int(fee_per_byte * size)
+        #DNotes does fees by the kb
+        #fee_per_byte = int(fee_per_kb / 1000)
+        #fee = int(fee_per_byte * size)
+        fee = math.ceil(Decimal(size) / Decimal(1000)) * fee_per_kb
         if fee < 500000:
             fee = 500000
         return fee
